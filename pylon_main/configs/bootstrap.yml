@@ -44,7 +44,7 @@ preordered_plugins:
 #
 - logging_hub
 #
-- prompts
+# - prompts
 - embeddings
 - flows
 - open_ai

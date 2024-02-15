@@ -1,1 +1,4 @@
 auth_mode: rpc
+
+public_routes:
+  - uri: '/forward\-auth/.*'

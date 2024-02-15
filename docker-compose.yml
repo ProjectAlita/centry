@@ -1,6 +1,5 @@
 version: "3"
 
-
 services:
   redis:
     image: redis:alpine
@@ -11,8 +10,9 @@ services:
       options:
         max-file: "5"
         max-size: "10m"
-    environment:
-      - REDIS_PASSWORD=$REDIS_PASSWORD
+    env_file:
+      - ./envs/default.env
+      - ./envs/override.env
     volumes:
       - redis-data:/data
     networks:
@@ -26,11 +26,10 @@ services:
       options:
         max-file: "5"
         max-size: "10m"
+    env_file:
+      - ./envs/default.env
+      - ./envs/override.env
     environment:
-      - POSTGRES_USER=$POSTGRES_USER
-      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
-      - POSTGRES_DB=$POSTGRES_DB
-      - POSTGRES_INITDB_ARGS=$POSTGRES_INITDB_ARGS
       - PGDATA=/data/pgdata
     volumes:
       - postgres-data:/data
@@ -45,17 +44,12 @@ services:
       options:
         max-file: "5"
         max-size: "10m"
+    env_file:
+      - ./envs/default.env
+      - ./envs/override.env
     environment:
       - PYLON_WEB_RUNTIME=gevent
       - PYLON_CONFIG_SEED=file:/data/pylon.yml
-      - REDIS_PASSWORD=$REDIS_PASSWORD
-      - POSTGRES_USER=$POSTGRES_USER
-      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
-      - POSTGRES_DB=$POSTGRES_DB
-      - APP_HOST=$APP_HOST
-      - APP_PROTO=$APP_PROTO
-      - DEFAULT_ADMIN_PASSWORD=$DEFAULT_ADMIN_PASSWORD
-      - APPLICATION_SECRET_KEY=$APPLICATION_AUTH_SECRET_KEY
     volumes:
       - ./pylon_auth:/data
     depends_on:
@@ -72,23 +66,19 @@ services:
       options:
         max-file: "5"
         max-size: "10m"
+    env_file:
+      - ./envs/default.env
+      - ./envs/override.env
     environment:
       - PYLON_WEB_RUNTIME=gevent
       - PYLON_CONFIG_SEED=file:/data/pylon.yml
-      - REDIS_PASSWORD=$REDIS_PASSWORD
-      - POSTGRES_USER=$POSTGRES_USER
-      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
-      - POSTGRES_DB=$POSTGRES_DB
-      - APP_HOST=$APP_HOST
-      - APP_PROTO=$APP_PROTO
-      - SECRETS_MASTER_KEY=$SECRETS_MASTER_KEY
-      - APPLICATION_SECRET_KEY=$APPLICATION_MAIN_SECRET_KEY
     volumes:
       - ./pylon_main:/data
+    ports:
+      - 80:8080
     depends_on:
       - redis
       - postgres
-      - pylon_auth
     networks:
       - centry
 
@@ -100,10 +90,12 @@ services:
       options:
         max-file: "5"
         max-size: "10m"
+    env_file:
+      - ./envs/default.env
+      - ./envs/override.env
     environment:
       - PYLON_WEB_RUNTIME=gevent
       - PYLON_CONFIG_SEED=file:/data/pylon.yml
-      - REDIS_PASSWORD=$REDIS_PASSWORD
     volumes:
       - ./pylon_indexer:/data
     depends_on:
@@ -111,11 +103,9 @@ services:
     networks:
       - centry
 
-
 volumes:
   redis-data:
   postgres-data:
-
 
 networks:
   centry:

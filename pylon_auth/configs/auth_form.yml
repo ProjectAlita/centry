@@ -1,0 +1,4 @@
+auth_form:
+  users:
+  - login: admin
+    password: $DEFAULT_ADMIN_PASSWORD

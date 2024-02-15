@@ -1,0 +1,16 @@
+plugin_repo:
+- type: github
+  namespace: ProjectAlita
+  metadata_provider:
+    type: pylon.core.providers.metadata.http
+    username: $GITHUB_USERNAME
+    password: $GITHUB_TOKEN
+  source_provider:
+    type: pylon.core.providers.source.git
+    delete_git_dir: false
+    depth: null
+    username: $GITHUB_USERNAME
+    password: $GITHUB_TOKEN
+
+preordered_plugins:
+- indexer_worker

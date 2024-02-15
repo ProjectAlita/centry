@@ -1,0 +1,59 @@
+plugin_repo:
+- type: github
+  namespace: ProjectAlita
+  metadata_provider:
+    type: pylon.core.providers.metadata.http
+    username: $GITHUB_USERNAME
+    password: $GITHUB_TOKEN
+  source_provider:
+    type: pylon.core.providers.source.git
+    delete_git_dir: false
+    depth: null
+    username: $GITHUB_USERNAME
+    password: $GITHUB_TOKEN
+- type: github
+  namespace: centry-core
+- type: github
+  namespace: carrier-io
+  metadata_provider:
+    type: pylon.core.providers.metadata.http
+    username: $GITHUB_USERNAME
+    password: $GITHUB_TOKEN
+  source_provider:
+    type: pylon.core.providers.source.git
+    delete_git_dir: false
+    depth: null
+    username: $GITHUB_USERNAME
+    password: $GITHUB_TOKEN
+
+preordered_plugins:
+- shared
+- auth
+- admin
+- projects
+- secrets
+- artifacts
+- integrations
+- tasks
+- scheduling
+#
+- theme
+- design-system
+#
+- s3_integration
+#
+- logging_hub
+#
+- prompts
+- embeddings
+- flows
+- open_ai
+- pgvector
+- ai_dial
+- open_ai_azure
+- vertex_ai
+#
+- prompt_lib
+- alita_ui
+#
+- indexer_api

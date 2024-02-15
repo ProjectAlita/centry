@@ -15,6 +15,23 @@ server:
     livez: true
     readyz: true
 #
+# Exposure
+#
+exposure:
+  event_node:
+    type: RedisEventNode
+    host: redis
+    port: 6379
+    password: $REDIS_PASSWORD
+    event_queue: exposure_events
+    hmac_key: $HMAC_EXPOSURE_KEY
+    hmac_digest: sha512
+    callback_workers: 16
+  handle:
+    enabled: true
+    prefixes:
+    - /forward-auth
+#
 # Local paths to modules and config
 #
 modules:
@@ -45,86 +62,13 @@ modules:
       source: https://github.com/centry-core/bootstrap.git
       branch: main
 #
-# Module configuration
+# Environment configuration
 #
 environment:
   NLTK_DATA: /data/cache/nltk
   TRANSFORMERS_CACHE: /data/cache/transformers
 #
-configs:
-  bootstrap:
-    plugin_repo:
-    - type: github
-      namespace: ProjectAlita
-    - type: github
-      namespace: centry-core
-    - type: github
-      namespace: carrier-io
-    preordered_plugins:
-    - shared
-    - auth
-    - admin
-    - projects
-    - secrets
-    - artifacts
-    - integrations
-    - tasks
-    - scheduling
-    #
-    - theme
-    - design-system
-    #
-    - s3_integration
-    #
-    - logging_hub
-    #
-    # - prompts
-    # - embeddings
-    # - flows
-    # - open_ai
-    # - pgvector
-    # - ai_dial
-    # - open_ai_azure
-    # - vertex_ai
-    #
-    - prompt_lib
-    - alita_ui
-  #
-  shared:
-    settings:
-      app_ip: $APP_HOST
-      app_host: $APP_PROTO://$APP_HOST
-      app_scheme: $APP_PROTO
-      arbiter_runtime: redis
-      redis_host: redis
-      redis_password: $REDIS_PASSWORD
-      database_vendor: postgres
-      postgres_host: postgres
-      postgres_user: $POSTGRES_USER
-      postgres_password: $POSTGRES_PASSWORD
-      postgres_db: $POSTGRES_DB
-      secrets_engine: database
-      secrets_master_key: $SECRETS_MASTER_KEY
-      storage_engine: libcloud
-      storage_libcloud_driver: LOCAL
-      storage_libcloud_params:
-        kwargs:
-          key: /data/libcloud/storage
-      storage_libcloud_encoder: base64
-  auth:
-    auth_mode: rpc
-  theme:
-    logout_url: $APP_PROTO://$APP_HOST/forward-auth/logout
-    change_password_url: "#"
-  tasks:
-    control_tower_task_path: https://github.com/carrier-io/control_tower/releases/download/tasknode/control-tower.zip
-    use_logging_hub: true
-  logging_hub:
-    event_node:
-      host: redis
-      port: 6379
-      password: $REDIS_PASSWORD
-      event_queue: centry_logs
+# Persistent sessions
 #
 sessions:
   redis:
@@ -139,7 +83,7 @@ events:
     host: redis
     password: $REDIS_PASSWORD
     queue: events
-    hmac_key: $RPC_HMAC_KEY
+    hmac_key: $HMAC_EVENTS_KEY
     hmac_digest: sha512
     callback_workers: 16
 #
@@ -150,7 +94,7 @@ rpc:
     host: redis
     password: $REDIS_PASSWORD
     queue: rpc
-    hmac_key: $RPC_HMAC_KEY
+    hmac_key: $HMAC_RPC_KEY
     hmac_digest: sha512
     callback_workers: 32
   id_prefix: "main_"

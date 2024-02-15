@@ -13,7 +13,7 @@ modules:
   requirements:
     mode: relaxed
     activation: bulk
-    cache: /data/cache
+    cache: /data/cache/pip
     provider:
       type: folder
       path: /data/requirements

@@ -1,0 +1,122 @@
+#
+# General server config
+#
+server:
+  name: centry-pylon-auth
+  path: /forward-auth/
+  proxy:
+    x_for: 1
+    x_proto: 1
+    x_host: 1
+  host: "0.0.0.0"
+  port: 8080
+  health:
+    healthz: true
+    livez: true
+    readyz: true
+#
+# Local paths to modules and config
+#
+modules:
+  plugins:
+    provider:
+      type: folder
+      path: /data/plugins
+  #
+  requirements:
+    mode: relaxed
+    activation: bulk
+    cache: /data/cache/pip
+    provider:
+      type: folder
+      path: /data/requirements
+  #
+  config:
+    provider:
+      type: folder
+      path: /data/configs
+  #
+  preload:
+    bootstrap:
+      provider:
+        type: git
+        delete_git_dir: false
+        depth: null
+      source: https://github.com/centry-core/bootstrap.git
+      branch: main
+#
+# Module configuration
+#
+configs:
+  bootstrap:
+    plugin_repo:
+      type: github
+      namespace: centry-core
+    preordered_plugins:
+    - auth_core
+    - auth_form
+    - auth_init
+    - auth_mappers
+    - auth_idp_rpc
+  #
+  auth_core:
+    db_url: postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/$POSTGRES_DB
+    db_options:  # DB options
+      pool_pre_ping: true
+      pool_size: 100
+      max_overflow: 200
+    auth_provider: form  # Main auth provider
+    auth_denied_url: "$APP_PROTO://$APP_HOST/access_denied"  # URL for application-specific 'access denied' page
+    default_login_url: "$APP_PROTO://$APP_HOST/"  # URL to redirect on login with no target set
+    default_logout_url: "$APP_PROTO://$APP_HOST/"  # URL to redirect on logout with no target set
+  #
+  auth_form:
+    users:
+    - login: admin
+      password: $DEFAULT_ADMIN_PASSWORD
+  #
+  auth_init:
+    initial_global_admins:
+    - admin
+#
+sessions:
+  redis:
+    host: redis
+    password: $REDIS_PASSWORD
+  prefix: pylon_auth_session_
+#
+# Events queue
+#
+events:
+  redis:
+    host: redis
+    password: $REDIS_PASSWORD
+    queue: events
+    hmac_key: $RPC_HMAC_KEY
+    hmac_digest: sha512
+    callback_workers: 16
+#
+# RPC
+#
+rpc:
+  redis:
+    host: redis
+    password: $REDIS_PASSWORD
+    queue: rpc
+    hmac_key: $RPC_HMAC_KEY
+    hmac_digest: sha512
+    callback_workers: 32
+  id_prefix: "auth_"
+#
+# Settings for Flask application
+#
+application:
+  SECRET_KEY: $APPLICATION_SECRET_KEY
+  SERVER_NAME: $APP_HOST
+  APPLICATION_ROOT: /forward-auth/
+  SESSION_COOKIE_NAME: centry_auth_session
+  SESSION_COOKIE_DOMAIN: $APP_HOST
+  SESSION_COOKIE_PATH: /
+  SESSION_COOKIE_HTTPONLY: true
+  # SESSION_COOKIE_SECURE: true
+  PREFERRED_URL_SCHEME: $APP_PROTO

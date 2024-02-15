@@ -1,0 +1,167 @@
+#
+# General server config
+#
+server:
+  name: centry-pylon-main
+  path: /
+  proxy:
+    x_for: 1
+    x_proto: 1
+    x_host: 1
+  host: "0.0.0.0"
+  port: 8080
+  health:
+    healthz: true
+    livez: true
+    readyz: true
+#
+# Local paths to modules and config
+#
+modules:
+  plugins:
+    provider:
+      type: folder
+      path: /data/plugins
+  #
+  requirements:
+    mode: relaxed
+    activation: bulk
+    cache: /data/cache/pip
+    provider:
+      type: folder
+      path: /data/requirements
+  #
+  config:
+    provider:
+      type: folder
+      path: /data/configs
+  #
+  preload:
+    bootstrap:
+      provider:
+        type: git
+        delete_git_dir: false
+        depth: null
+      source: https://github.com/centry-core/bootstrap.git
+      branch: main
+#
+# Module configuration
+#
+environment:
+  NLTK_DATA: /data/cache/nltk
+  TRANSFORMERS_CACHE: /data/cache/transformers
+#
+configs:
+  bootstrap:
+    plugin_repo:
+    - type: github
+      namespace: ProjectAlita
+    - type: github
+      namespace: centry-core
+    - type: github
+      namespace: carrier-io
+    preordered_plugins:
+    - shared
+    - auth
+    - admin
+    - projects
+    - secrets
+    - artifacts
+    - integrations
+    - tasks
+    - scheduling
+    #
+    - theme
+    - design-system
+    #
+    - s3_integration
+    #
+    - logging_hub
+    #
+    # - prompts
+    # - embeddings
+    # - flows
+    # - open_ai
+    # - pgvector
+    # - ai_dial
+    # - open_ai_azure
+    # - vertex_ai
+    #
+    - prompt_lib
+    - alita_ui
+  #
+  shared:
+    settings:
+      app_ip: $APP_HOST
+      app_host: $APP_PROTO://$APP_HOST
+      app_scheme: $APP_PROTO
+      arbiter_runtime: redis
+      redis_host: redis
+      redis_password: $REDIS_PASSWORD
+      database_vendor: postgres
+      postgres_host: postgres
+      postgres_user: $POSTGRES_USER
+      postgres_password: $POSTGRES_PASSWORD
+      postgres_db: $POSTGRES_DB
+      secrets_engine: database
+      secrets_master_key: $SECRETS_MASTER_KEY
+      storage_engine: libcloud
+      storage_libcloud_driver: LOCAL
+      storage_libcloud_params:
+        kwargs:
+          key: /data/libcloud/storage
+      storage_libcloud_encoder: base64
+  auth:
+    auth_mode: rpc
+  theme:
+    logout_url: $APP_PROTO://$APP_HOST/forward-auth/logout
+    change_password_url: "#"
+  tasks:
+    control_tower_task_path: https://github.com/carrier-io/control_tower/releases/download/tasknode/control-tower.zip
+    use_logging_hub: true
+  logging_hub:
+    event_node:
+      host: redis
+      port: 6379
+      password: $REDIS_PASSWORD
+      event_queue: centry_logs
+#
+sessions:
+  redis:
+    host: redis
+    password: $REDIS_PASSWORD
+  prefix: pylon_main_session_
+#
+# Events queue
+#
+events:
+  redis:
+    host: redis
+    password: $REDIS_PASSWORD
+    queue: events
+    hmac_key: $RPC_HMAC_KEY
+    hmac_digest: sha512
+    callback_workers: 16
+#
+# RPC
+#
+rpc:
+  redis:
+    host: redis
+    password: $REDIS_PASSWORD
+    queue: rpc
+    hmac_key: $RPC_HMAC_KEY
+    hmac_digest: sha512
+    callback_workers: 32
+  id_prefix: "main_"
+#
+# Settings for Flask application
+#
+application:
+  SECRET_KEY: $APPLICATION_SECRET_KEY
+  SESSION_COOKIE_NAME: centry_main_session
+  SESSION_COOKIE_DOMAIN: $APP_HOST
+  SESSION_COOKIE_PATH: /
+  SESSION_COOKIE_HTTPONLY: true
+  # SESSION_COOKIE_SECURE: true
+  PREFERRED_URL_SCHEME: $APP_PROTO

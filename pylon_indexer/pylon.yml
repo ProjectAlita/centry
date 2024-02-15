@@ -1,0 +1,44 @@
+server:
+  path: /
+  host: "0.0.0.0"
+  port: 8080
+
+modules:
+  plugins:
+    provider:
+      type: folder
+      path: /data/plugins
+  #
+  requirements:
+    mode: relaxed
+    activation: bulk
+    cache: /data/cache
+    provider:
+      type: folder
+      path: /data/requirements
+  #
+  config:
+    provider:
+      type: folder
+      path: /data/configs
+
+environment:
+  HF_HOME: /data/cache
+  TOKENIZERS_PARALLELISM: "false"
+  ANONYMIZED_TELEMETRY: "False"
+
+configs:
+  indexer_worker:
+    event_node:
+      type: RedisEventNode
+      host: redis
+      port: 6379
+      password: $REDIS_PASSWORD
+      event_queue: indexer
+      hmac_key: indexer_hmac_key
+      hmac_digest: sha512
+      callback_workers: 16
+      mute_first_failed_connections: 10
+      use_ssl: false
+      log_errors: true
+    nltk_data: /data/cache

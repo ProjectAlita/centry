@@ -2,7 +2,7 @@
 
 ## Requirements
 - Docker
-- Docker compose 2.24.0+
+- Docker compose (docker-compose-plugin preferred)
 
 ## Configuration
 1. Copy envs/default.env to envs/override.env

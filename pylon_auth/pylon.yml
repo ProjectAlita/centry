@@ -28,6 +28,7 @@ exposure:
     hmac_digest: sha512
     callback_workers: 16
   expose: true
+  announce_interval: 3
 #
 # Local paths to modules and config
 #

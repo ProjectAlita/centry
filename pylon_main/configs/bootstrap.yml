@@ -55,5 +55,6 @@ preordered_plugins:
 #
 - prompt_lib
 - alita_ui
+- social
 #
 - indexer_api

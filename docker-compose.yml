@@ -122,6 +122,8 @@ services:
       - CPU_QUOTA=1
       - ARBITER_RUNTIME=redis
       - REDIS_HOST=redis
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - redis
       - pylon_main
@@ -147,6 +149,8 @@ services:
       - CPU_QUOTA=1
       - ARBITER_RUNTIME=redis
       - REDIS_HOST=redis
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - redis
     networks:

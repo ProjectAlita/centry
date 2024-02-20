@@ -103,6 +103,55 @@ services:
     networks:
       - centry
 
+  interceptor_main:
+    image: getcarrier/interceptor:tasknode
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
+    env_file:
+      - ./envs/default.env
+      - ./envs/override.env
+    environment:
+      - SUPERVISOR_CONF_PATH=/tmp/interceptor.conf
+      - CPU_CORES=5
+      - QUEUE_NAME=default
+      - RAM_QUOTA=4g
+      - CPU_QUOTA=1
+      - ARBITER_RUNTIME=redis
+      - REDIS_HOST=redis
+    depends_on:
+      - redis
+      - pylon_main
+    networks:
+      - centry
+
+  interceptor_internal:
+    image: getcarrier/interceptor:tasknode
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
+    env_file:
+      - ./envs/default.env
+      - ./envs/override.env
+    environment:
+      - SUPERVISOR_CONF_PATH=/tmp/interceptor.conf
+      - CPU_CORES=15
+      - QUEUE_NAME=__internal
+      - RAM_QUOTA=4g
+      - CPU_QUOTA=1
+      - ARBITER_RUNTIME=redis
+      - REDIS_HOST=redis
+    depends_on:
+      - redis
+    networks:
+      - centry
+
 volumes:
   redis-data:
   postgres-data:

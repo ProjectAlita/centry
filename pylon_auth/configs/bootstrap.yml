@@ -8,3 +8,4 @@ preordered_plugins:
 - auth_init
 - auth_mappers
 - auth_idp_rpc
+- auth_oidc

@@ -42,6 +42,8 @@ preordered_plugins:
 #
 - s3_integration
 #
+- usage
+#
 - logging_hub
 #
 # - prompts

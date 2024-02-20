@@ -46,11 +46,10 @@ preordered_plugins:
 #
 - logging_hub
 #
-# - prompts
-- embeddings
+# - embeddings
 - flows
 - open_ai
-- pgvector
+# - pgvector
 - ai_dial
 - open_ai_azure
 - vertex_ai

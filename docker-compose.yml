@@ -126,6 +126,7 @@ services:
       - CPU_QUOTA=1
       - ARBITER_RUNTIME=redis
       - REDIS_HOST=redis
+      # - LAMBDA_DOCKER_NETWORK=centry_centry
       # - SSL_CERTS=/ssl/ca.crt
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -155,6 +156,7 @@ services:
       - CPU_QUOTA=1
       - ARBITER_RUNTIME=redis
       - REDIS_HOST=redis
+      # - LAMBDA_DOCKER_NETWORK=centry_centry
       # - SSL_CERTS=/ssl/ca.crt
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock

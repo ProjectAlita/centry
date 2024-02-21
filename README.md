@@ -26,6 +26,9 @@
   - edit pylon_auth/configs/auth_oidc.yml: insert config for your OIDC provider
   - edit pylon_auth/configs/auth_init.yml: specify ID from your provider (e.g. email) for default platform admin
 
+5. Interceptor docker network for lambdas (optional):
+  - edit docker-compose.yml: uncomment and tweak LAMBDA_DOCKER_NETWORK for interceptors
+
 ## Start
 ```sh
 docker compose pull

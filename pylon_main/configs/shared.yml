@@ -6,6 +6,10 @@ settings:
   redis_host: redis
   redis_password: $REDIS_PASSWORD
   database_vendor: postgres
+  database_engine_options:
+    pool_pre_ping: true
+    pool_size: 100
+    max_overflow: 200
   postgres_host: postgres
   postgres_user: $POSTGRES_USER
   postgres_password: $POSTGRES_PASSWORD

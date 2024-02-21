@@ -58,4 +58,5 @@ preordered_plugins:
 - alita_ui
 - social
 #
-- indexer_api
+# - indexer_api
+# - datasources

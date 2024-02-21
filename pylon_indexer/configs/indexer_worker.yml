@@ -11,4 +11,6 @@ event_node:
   use_ssl: false
   log_errors: true
 
+task_limit: null
+
 nltk_data: /data/cache

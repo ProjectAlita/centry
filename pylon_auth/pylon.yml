@@ -15,6 +15,12 @@ server:
     livez: true
     readyz: true
 #
+# SSL CAs
+#
+# ssl:
+#   certs:
+#   - /ssl/ca.crt
+#
 # Exposure
 #
 exposure:

@@ -11,12 +11,18 @@ server:
   host: "0.0.0.0"
   port: 8080
   # kwargs:
-  #   certfile: /data/ssl/server.crt
-  #   keyfile: /data/ssl/server.key
+  #   certfile: /ssl/server.crt
+  #   keyfile: /ssl/server.key
   health:
     healthz: true
     livez: true
     readyz: true
+#
+# SSL CAs
+#
+# ssl:
+#   certs:
+#   - /ssl/ca.crt
 #
 # Exposure
 #

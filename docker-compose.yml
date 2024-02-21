@@ -52,6 +52,7 @@ services:
       - PYLON_CONFIG_SEED=file:/data/pylon.yml
     volumes:
       - ./pylon_auth:/data
+      - ./ssl:/ssl
     depends_on:
       - redis
       - postgres
@@ -74,6 +75,7 @@ services:
       - PYLON_CONFIG_SEED=file:/data/pylon.yml
     volumes:
       - ./pylon_main:/data
+      - ./ssl:/ssl
     ports:
       - 80:8080
     depends_on:
@@ -98,6 +100,7 @@ services:
       - PYLON_CONFIG_SEED=file:/data/pylon.yml
     volumes:
       - ./pylon_indexer:/data
+      - ./ssl:/ssl
     depends_on:
       - redis
     networks:
@@ -122,8 +125,10 @@ services:
       - CPU_QUOTA=1
       - ARBITER_RUNTIME=redis
       - REDIS_HOST=redis
+      # - SSL_CERTS=/ssl/ca.crt
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./ssl:/ssl
     depends_on:
       - redis
       - pylon_main
@@ -149,8 +154,10 @@ services:
       - CPU_QUOTA=1
       - ARBITER_RUNTIME=redis
       - REDIS_HOST=redis
+      # - SSL_CERTS=/ssl/ca.crt
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./ssl:/ssl
     depends_on:
       - redis
     networks:

@@ -35,3 +35,5 @@ docker compose logs -f
 3. Create secret in Administration mode: ai_project_id, should contain project ID (created at step 1)
 
 4. Restart main pylon
+
+5. Enable schedule projects_create_personal_project

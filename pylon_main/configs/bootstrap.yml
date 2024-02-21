@@ -46,17 +46,18 @@ preordered_plugins:
 #
 - logging_hub
 #
-# - embeddings
+- embeddings
 - flows
-- open_ai
-# - pgvector
+#
 - ai_dial
+- open_ai
 - open_ai_azure
 - vertex_ai
+#
+- pgvector
 #
 - prompt_lib
 - alita_ui
 - social
 #
-# - indexer_api
-# - datasources
+- datasources

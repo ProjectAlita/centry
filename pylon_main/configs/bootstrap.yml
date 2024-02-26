@@ -53,6 +53,7 @@ preordered_plugins:
 - open_ai
 - open_ai_azure
 - vertex_ai
+- hugging_face
 #
 - pgvector
 #

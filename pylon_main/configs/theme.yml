@@ -1,2 +1,8 @@
 logout_url: $APP_PROTO://$APP_HOST/forward-auth/logout
 change_password_url: "#"
+
+landing:
+  kind: redirect
+  url: "http://$APP_HOST/alita_ui"
+
+default_mode_uri: /-/system/status/empty

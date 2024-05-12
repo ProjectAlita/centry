@@ -10,3 +10,6 @@ event_node:
   mute_first_failed_connections: 10
   use_ssl: false
   log_errors: true
+
+nltk_data: /data/cache/nltk
+api_url: http://pylon_main:8080

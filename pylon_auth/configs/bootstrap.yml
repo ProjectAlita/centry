@@ -1,6 +1,48 @@
 plugin_repo:
-  type: github
+- type: github
+  namespace: ProjectAlita
+  branch: stable
+  metadata_provider:
+    type: pylon.core.providers.metadata.http
+    username: $GITHUB_USERNAME
+    password: $GITHUB_TOKEN
+  source_provider:
+    type: pylon.core.providers.source.git
+    delete_git_dir: false
+    branch: stable
+    depth: null
+    username: $GITHUB_USERNAME
+    password: $GITHUB_TOKEN
+
+- type: github
   namespace: centry-core
+  branch: stable
+  metadata_provider:
+    type: pylon.core.providers.metadata.http
+    username: $GITHUB_USERNAME
+    password: $GITHUB_TOKEN
+  source_provider:
+    type: pylon.core.providers.source.git
+    delete_git_dir: false
+    branch: stable
+    depth: null
+    username: $GITHUB_USERNAME
+    password: $GITHUB_TOKEN
+
+- type: github
+  namespace: carrier-io
+  branch: stable
+  metadata_provider:
+    type: pylon.core.providers.metadata.http
+    username: $GITHUB_USERNAME
+    password: $GITHUB_TOKEN
+  source_provider:
+    type: pylon.core.providers.source.git
+    delete_git_dir: false
+    branch: stable
+    depth: null
+    username: $GITHUB_USERNAME
+    password: $GITHUB_TOKEN
 
 preordered_plugins:
 - auth_core

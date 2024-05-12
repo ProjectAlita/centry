@@ -109,6 +109,13 @@ rpc:
     callback_workers: 32
   id_prefix: "main_"
 #
+# SIO
+#
+socketio:
+  redis:
+    host: redis
+    password: $REDIS_PASSWORD
+#
 # Settings for Flask application
 #
 application:

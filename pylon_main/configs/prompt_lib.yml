@@ -1,0 +1,3 @@
+auto_setup: true
+ai_project_allowed_domains: "centry.user"
+add_admin_roles: ["system", "admin", "editor", "viewer", "prompt_lib_public", "prompt_lib_moderators", "public_admin"]

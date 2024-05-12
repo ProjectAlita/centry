@@ -97,7 +97,7 @@ services:
       - ./envs/default.env
       - ./envs/override.env
     environment:
-      - PYLON_WEB_RUNTIME=gevent
+      - PYLON_WEB_RUNTIME=waitress
       - PYLON_CONFIG_SEED=file:/data/pylon.yml
     volumes:
       - ./pylon_indexer:/data

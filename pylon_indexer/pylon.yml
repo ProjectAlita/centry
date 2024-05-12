@@ -37,6 +37,8 @@ modules:
       branch: main
 
 environment:
-  HF_HOME: /data/cache
-  TOKENIZERS_PARALLELISM: "false"
   ANONYMIZED_TELEMETRY: "False"
+  TOKENIZERS_PARALLELISM: "false"
+  HF_HOME: /data/cache
+  NLTK_DATA: /data/cache/nltk
+  TRANSFORMERS_CACHE: /data/cache/transformers

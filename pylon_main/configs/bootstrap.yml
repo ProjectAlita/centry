@@ -70,6 +70,7 @@ preordered_plugins:
 - open_ai_azure
 - hugging_face
 #
+- chroma
 - pgvector
 #
 - promptlib_shared

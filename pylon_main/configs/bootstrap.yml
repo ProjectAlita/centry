@@ -63,9 +63,8 @@ preordered_plugins:
 - usage
 #
 - logging_hub
-#
-- embeddings
-- flows
+- monitoring_hub
+- monitoring
 #
 - ai_dial
 - open_ai_azure
@@ -76,6 +75,8 @@ preordered_plugins:
 - promptlib_shared
 - prompt_lib
 - datasources
+- applications
+- chat
 #
 - social
 #

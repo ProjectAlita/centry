@@ -26,9 +26,6 @@
   - edit pylon_auth/configs/auth_oidc.yml: insert config for your OIDC provider
   - edit pylon_auth/configs/auth_init.yml: specify ID from your provider (e.g. email) for default platform admin
 
-5. Interceptor docker network for lambdas (optional):
-  - edit docker-compose.yml: uncomment and tweak LAMBDA_DOCKER_NETWORK for interceptors
-
 ## Start
 ```sh
 docker compose pull
@@ -37,12 +34,5 @@ docker compose logs -f
 ```
 
 ## First-time platform configuration
-1. Create project for public prompt library
-
-2. Create AI integration in Administration mode
-
-3. Create secret in Administration mode: ai_project_id, should contain project ID (created at step 1)
-
-4. Restart main pylon
-
-5. Enable schedule projects_create_personal_project
+1. Create AI integration in Administration mode
+2. Create HF integration in Administration mode

@@ -45,4 +45,7 @@ plugin_repo:
     password: $GITHUB_TOKEN
 
 preordered_plugins:
+- worker_core
 - indexer_worker
+- monitoring_worker
+- monitoring

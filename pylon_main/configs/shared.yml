@@ -3,14 +3,14 @@ settings:
   app_host: $APP_PROTO://$APP_HOST
   app_scheme: $APP_PROTO
   arbiter_runtime: redis
-  redis_host: redis
+  redis_host: $REDIS_HOST
   redis_password: $REDIS_PASSWORD
   database_vendor: postgres
   database_engine_options:
     pool_pre_ping: true
     pool_size: 100
     max_overflow: 200
-  postgres_host: postgres
+  postgres_host: $POSTGRES_HOST
   postgres_user: $POSTGRES_USER
   postgres_password: $POSTGRES_PASSWORD
   postgres_db: $POSTGRES_DB
@@ -22,3 +22,4 @@ settings:
     kwargs:
       key: /data/storage
   storage_libcloud_encoder: base64
+  PERSISTENT_SECRETS: false

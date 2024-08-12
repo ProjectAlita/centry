@@ -1,8 +1,8 @@
 db_url: postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/$POSTGRES_DB
 db_options:  # DB options
   pool_pre_ping: true
-  pool_size: 100
-  max_overflow: 200
+  pool_size: 25
+  max_overflow: 25
 
 auth_provider: form  # Main auth provider
 auth_denied_url: "$APP_PROTO://$APP_HOST/access_denied"  # URL for application-specific 'access denied' page

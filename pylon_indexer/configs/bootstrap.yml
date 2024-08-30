@@ -46,6 +46,15 @@ plugin_repo:
 
 preordered_plugins:
 - worker_core
+#
 - indexer_worker
-- monitoring_worker
+#
 - monitoring
+- monitoring_worker
+#
+- ai_preload_shim_worker
+- ai_dial_worker
+- open_ai_worker
+- open_ai_azure_worker
+- hugging_face_worker
+- vertex_ai_worker

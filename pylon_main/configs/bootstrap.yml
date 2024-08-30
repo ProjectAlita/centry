@@ -63,12 +63,18 @@ preordered_plugins:
 - usage
 #
 - logging_hub
-- monitoring_hub
-- monitoring
+#
+# - embeddings
+# - flows
+#
+- worker_client
 #
 - ai_dial
+- open_ai
 - open_ai_azure
 - hugging_face
+- vertex_ai
+- ai_preload_shim
 #
 - chroma
 - pgvector
@@ -80,5 +86,9 @@ preordered_plugins:
 - chat
 #
 - social
+- notifications
 #
 - alita_ui
+#
+- monitoring
+- monitoring_hub

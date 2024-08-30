@@ -46,8 +46,11 @@ plugin_repo:
 
 preordered_plugins:
 - auth_core
-- auth_form
+#
 - auth_init
 - auth_mappers
-- auth_idp_rpc
+#
+- auth_form
 - auth_oidc
+#
+- auth_idp_rpc

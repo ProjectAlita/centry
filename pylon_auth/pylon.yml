@@ -20,6 +20,10 @@ server:
 # ssl:
 #   certs:
 #   - /ssl/ca.crt
+
+pylon_db:
+  engine_url: sqlite:////data/pylon.db
+
 #
 # Exposure
 #

@@ -41,6 +41,10 @@ exposure:
     enabled: true
     prefixes:
     - /forward-auth
+
+pylon_db:
+  engine_url: sqlite:////data/pylon.db
+
 #
 # Local paths to modules and config
 #

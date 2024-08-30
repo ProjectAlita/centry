@@ -8,6 +8,9 @@ server:
 #   certs:
 #   - /ssl/ca.crt
 
+pylon_db:
+  engine_url: sqlite:////data/pylon.db
+
 modules:
   plugins:
     provider:

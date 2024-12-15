@@ -1,1 +1,2 @@
+default_release: $ALITA_RELEASE
 auth_token: $GITHUB_TOKEN

@@ -68,7 +68,7 @@ modules:
         delete_git_dir: false
         depth: null
       source: https://github.com/centry-core/bootstrap.git
-      branch: main
+      branch: $ALITA_RELEASE
 #
 # Persistent sessions
 #

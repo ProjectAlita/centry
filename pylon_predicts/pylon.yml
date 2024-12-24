@@ -1,5 +1,5 @@
 server:
-  name: centry-pylon-indexer
+  name: centry-pylon-predicts
   path: /
   host: "0.0.0.0"
   port: 8080

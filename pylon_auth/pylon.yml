@@ -20,6 +20,10 @@ server:
 # ssl:
 #   certs:
 #   - /ssl/ca.crt
+
+pylon_db:
+  engine_url: sqlite:////data/pylon.db
+
 #
 # Exposure
 #
@@ -64,7 +68,7 @@ modules:
         delete_git_dir: false
         depth: null
       source: https://github.com/centry-core/bootstrap.git
-      branch: main
+      branch: $ALITA_RELEASE
 #
 # Persistent sessions
 #

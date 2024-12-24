@@ -36,6 +36,24 @@ services:
     networks:
       - centry
 
+  pgvector:
+    image: pgvector/pgvector:pg16
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
+    env_file:
+      - ./envs/default.env
+      - ./envs/override.env
+    environment:
+      - PGDATA=/data/pgdata
+    volumes:
+      - pgvector-data:/data
+    networks:
+      - centry
+
   pylon_auth:
     image: getcarrier/pylon:tasknode
     restart: unless-stopped
@@ -107,8 +125,8 @@ services:
     networks:
       - centry
 
-  pgvector:
-    image: ankane/pgvector:v0.5.0
+  pylon_predicts:
+    image: getcarrier/pylon:tasknode
     restart: unless-stopped
     logging:
       driver: "json-file"
@@ -119,9 +137,13 @@ services:
       - ./envs/default.env
       - ./envs/override.env
     environment:
-      - PGDATA=/data/pgdata
+      - PYLON_WEB_RUNTIME=waitress
+      - PYLON_CONFIG_SEED=file:/data/pylon.yml
     volumes:
-      - pgvector-data:/data
+      - ./pylon_predicts:/data
+      - ./ssl:/ssl
+    depends_on:
+      - redis
     networks:
       - centry
 

@@ -1,1 +1,1 @@
-alita_ui_url: "http://$APP_HOST/alita_ui"
+alita_ui_url: "$APP_PROTO://$APP_HOST/alita_ui"

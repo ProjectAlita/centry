@@ -45,3 +45,4 @@ environment:
   HF_HOME: /data/cache
   NLTK_DATA: /data/cache/nltk
   TRANSFORMERS_CACHE: /data/cache/transformers
+  TIKTOKEN_CACHE_DIR: /data/cache/tiktoken

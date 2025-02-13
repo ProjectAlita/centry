@@ -98,3 +98,4 @@ preordered_plugins:
 - integration_jira
 - integration_confluence
 - integration_test_rail
+- integration_qtest

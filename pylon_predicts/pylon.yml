@@ -1,8 +1,15 @@
 server:
-  name: centry-pylon-predicts
+  name: ${NAME}
   path: /
   host: "0.0.0.0"
   port: 8080
+  health:
+    healthz: true
+    livez: true
+    readyz: true
+
+log:
+  level: info
 
 # ssl:
 #   certs:
@@ -37,7 +44,7 @@ modules:
         delete_git_dir: false
         depth: null
       source: https://github.com/centry-core/bootstrap.git
-      branch: $ALITA_RELEASE
+      branch: ${ALITA_RELEASE}
 
 environment:
   ANONYMIZED_TELEMETRY: "False"

@@ -1,5 +1,6 @@
 event_node:
-  host: redis
-  port: 6379
-  password: $REDIS_PASSWORD
-  event_queue: centry_logs
+  host: ${REDIS_HOST}
+  port: ${REDIS_PORT}
+  password: ${REDIS_PASSWORD}
+  use_ssl: ${REDIS_SSL}
+  event_queue: ${NAME_PREFIX}_logs

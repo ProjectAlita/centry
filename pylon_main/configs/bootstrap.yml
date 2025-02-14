@@ -87,3 +87,4 @@ preordered_plugins:
 - integration_gitlab
 - integration_jira
 - integration_test_rail
+- integration_qtest

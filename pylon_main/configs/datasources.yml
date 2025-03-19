@@ -13,3 +13,5 @@ event_node:
 
 nltk_data: /data/cache/nltk
 api_url: http://pylon_main:8080
+
+datasource_icon_path: /data/static/datasource_icon_path

@@ -5,4 +5,4 @@ plugins:
   - configuration
   - models
 
-reload_enabled: true
+reload_enabled: false

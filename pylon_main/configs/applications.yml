@@ -12,3 +12,7 @@ event_node:
   log_errors: true
 
 nltk_data: /data/cache/nltk
+
+application_icon_path: /data/static/application_icon
+application_tool_icon_path: /data/static/alita_static-main/tool_icons
+default_entity_icons_path: /data/static/alita_static-main/default_entity_icons

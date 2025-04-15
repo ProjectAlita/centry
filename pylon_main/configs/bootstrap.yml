@@ -84,7 +84,6 @@ preordered_plugins:
 - integration_ado_wiki
 - integration_confluence
 - integration_github
-- integration_gitlab
 - integration_jira
 - integration_test_rail
 - integration_qtest

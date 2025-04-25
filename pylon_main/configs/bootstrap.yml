@@ -94,8 +94,4 @@ preordered_plugins:
 - monitoring
 - monitoring_hub
 #
-- integration_github
-- integration_jira
-- integration_confluence
-- integration_test_rail
-- integration_qtest
+- integrations_configurations

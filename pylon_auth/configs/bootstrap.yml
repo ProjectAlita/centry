@@ -11,6 +11,8 @@ plugin_repo:
   source_provider:
     type: pylon.core.providers.source.git
     delete_git_dir: false
+    add_source_data: true
+    add_head_data: true
     branch: ${ALITA_RELEASE}
     depth: null
     username: ${LICENSE_USERNAME}
@@ -28,6 +30,8 @@ plugin_repo:
   source_provider:
     type: pylon.core.providers.source.git
     delete_git_dir: false
+    add_source_data: true
+    add_head_data: true
     branch: ${ALITA_RELEASE}
     depth: null
     username: ${LICENSE_USERNAME}

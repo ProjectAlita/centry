@@ -1,2 +1,11 @@
 default_release: ${ALITA_RELEASE}
 auth_token: ${LICENSE_PASSWORD}
+
+disable_monitoring_charts:
+- sentiment
+- relevancy
+- reliability
+- promptQuality
+- promptScatter
+- topicPrompt
+- topicChart

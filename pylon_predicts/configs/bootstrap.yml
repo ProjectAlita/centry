@@ -1,48 +1,38 @@
 plugin_repo:
 - type: github
   namespace: ProjectAlita
-  branch: $ALITA_RELEASE
+  branch: ${ALITA_RELEASE}
+  #
   metadata_provider:
     type: pylon.core.providers.metadata.http
-    username: $GITHUB_USERNAME
-    password: $GITHUB_TOKEN
+    username: ${LICENSE_USERNAME}
+    password: ${LICENSE_PASSWORD}
+  #
   source_provider:
     type: pylon.core.providers.source.git
     delete_git_dir: false
-    branch: $ALITA_RELEASE
+    branch: ${ALITA_RELEASE}
     depth: null
-    username: $GITHUB_USERNAME
-    password: $GITHUB_TOKEN
-
+    username: ${LICENSE_USERNAME}
+    password: ${LICENSE_PASSWORD}
+#
 - type: github
   namespace: centry-core
-  branch: $ALITA_RELEASE
+  branch: ${ALITA_RELEASE}
+  #
   metadata_provider:
     type: pylon.core.providers.metadata.http
-    username: $GITHUB_USERNAME
-    password: $GITHUB_TOKEN
+    username: ${LICENSE_USERNAME}
+    password: ${LICENSE_PASSWORD}
+  #
   source_provider:
     type: pylon.core.providers.source.git
     delete_git_dir: false
-    branch: $ALITA_RELEASE
+    branch: ${ALITA_RELEASE}
     depth: null
-    username: $GITHUB_USERNAME
-    password: $GITHUB_TOKEN
+    username: ${LICENSE_USERNAME}
+    password: ${LICENSE_PASSWORD}
 
-- type: github
-  namespace: carrier-io
-  branch: $ALITA_RELEASE
-  metadata_provider:
-    type: pylon.core.providers.metadata.http
-    username: $GITHUB_USERNAME
-    password: $GITHUB_TOKEN
-  source_provider:
-    type: pylon.core.providers.source.git
-    delete_git_dir: false
-    branch: $ALITA_RELEASE
-    depth: null
-    username: $GITHUB_USERNAME
-    password: $GITHUB_TOKEN
 
 preordered_plugins:
 - worker_core

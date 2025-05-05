@@ -1,48 +1,38 @@
 plugin_repo:
 - type: github
   namespace: ProjectAlita
-  branch: main
+  branch: ${ALITA_RELEASE}
+  #
   metadata_provider:
     type: pylon.core.providers.metadata.http
-    username: $GITHUB_USERNAME
-    password: $GITHUB_TOKEN
+    username: ${LICENSE_USERNAME}
+    password: ${LICENSE_PASSWORD}
+  #
   source_provider:
     type: pylon.core.providers.source.git
     delete_git_dir: false
-    branch: stable
+    branch: ${ALITA_RELEASE}
     depth: null
-    username: $GITHUB_USERNAME
-    password: $GITHUB_TOKEN
-
+    username: ${LICENSE_USERNAME}
+    password: ${LICENSE_PASSWORD}
+#
 - type: github
   namespace: centry-core
-  branch: main
+  branch: ${ALITA_RELEASE}
+  #
   metadata_provider:
     type: pylon.core.providers.metadata.http
-    username: $GITHUB_USERNAME
-    password: $GITHUB_TOKEN
+    username: ${LICENSE_USERNAME}
+    password: ${LICENSE_PASSWORD}
+  #
   source_provider:
     type: pylon.core.providers.source.git
     delete_git_dir: false
-    branch: main
+    branch: ${ALITA_RELEASE}
     depth: null
-    username: $GITHUB_USERNAME
-    password: $GITHUB_TOKEN
+    username: ${LICENSE_USERNAME}
+    password: ${LICENSE_PASSWORD}
 
-- type: github
-  namespace: carrier-io
-  branch: main
-  metadata_provider:
-    type: pylon.core.providers.metadata.http
-    username: $GITHUB_USERNAME
-    password: $GITHUB_TOKEN
-  source_provider:
-    type: pylon.core.providers.source.git
-    delete_git_dir: false
-    branch: main
-    depth: null
-    username: $GITHUB_USERNAME
-    password: $GITHUB_TOKEN
 
 preordered_plugins:
 - shared
@@ -64,9 +54,6 @@ preordered_plugins:
 #
 - logging_hub
 #
-# - embeddings
-# - flows
-#
 - worker_client
 #
 - ai_dial
@@ -77,7 +64,6 @@ preordered_plugins:
 - amazon_bedrock
 - ai_preload_shim
 #
-# - chroma
 - pgvector
 #
 - promptlib_shared

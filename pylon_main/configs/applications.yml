@@ -1,14 +1,14 @@
 event_node:
   type: RedisEventNode
-  host: redis
-  port: 6379
-  password: $REDIS_PASSWORD
-  event_queue: indexer
-  hmac_key: $HMAC_INDEXER_KEY
+  host: ${REDIS_HOST}
+  port: ${REDIS_PORT}
+  password: ${REDIS_PASSWORD}
+  event_queue: ${NAME_PREFIX}_indexer
+  hmac_key: ${INDEXER_HMAC_KEY}
   hmac_digest: sha512
   callback_workers: 16
   mute_first_failed_connections: 10
-  use_ssl: false
+  use_ssl: ${REDIS_SSL}
   log_errors: true
 
 nltk_data: /data/cache/nltk

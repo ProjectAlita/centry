@@ -55,7 +55,7 @@ services:
       - centry
 
   pylon_auth:
-    image: getcarrier/pylon:tasknode
+    image: getcarrier/pylon:1.2
     restart: unless-stopped
     logging:
       driver: "json-file"
@@ -66,6 +66,7 @@ services:
       - ./envs/default.env
       - ./envs/override.env
     environment:
+      - NAME=pylon-auth
       - PYLON_WEB_RUNTIME=gevent
       - PYLON_CONFIG_SEED=file:/data/pylon.yml
     volumes:
@@ -78,7 +79,7 @@ services:
       - centry
 
   pylon_main:
-    image: getcarrier/pylon:tasknode
+    image: getcarrier/pylon:1.2
     restart: unless-stopped
     logging:
       driver: "json-file"
@@ -89,6 +90,7 @@ services:
       - ./envs/default.env
       - ./envs/override.env
     environment:
+      - NAME=pylon-main
       - PYLON_WEB_RUNTIME=gevent
       - PYLON_CONFIG_SEED=file:/data/pylon.yml
     volumes:
@@ -104,7 +106,7 @@ services:
       - centry
 
   pylon_indexer:
-    image: getcarrier/pylon:tasknode
+    image: getcarrier/pylon:1.2
     restart: unless-stopped
     logging:
       driver: "json-file"
@@ -115,6 +117,7 @@ services:
       - ./envs/default.env
       - ./envs/override.env
     environment:
+      - NAME=pylon-indexer
       - PYLON_WEB_RUNTIME=waitress
       - PYLON_CONFIG_SEED=file:/data/pylon.yml
     volumes:
@@ -126,7 +129,7 @@ services:
       - centry
 
   pylon_predicts:
-    image: getcarrier/pylon:tasknode
+    image: getcarrier/pylon:1.2
     restart: unless-stopped
     logging:
       driver: "json-file"
@@ -137,6 +140,7 @@ services:
       - ./envs/default.env
       - ./envs/override.env
     environment:
+      - NAME=pylon-predicts
       - PYLON_WEB_RUNTIME=waitress
       - PYLON_CONFIG_SEED=file:/data/pylon.yml
     volumes:

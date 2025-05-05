@@ -1,2 +1,2 @@
-default_release: $ALITA_RELEASE
-auth_token: $GITHUB_TOKEN
+default_release: ${ALITA_RELEASE}
+auth_token: ${LICENSE_PASSWORD}

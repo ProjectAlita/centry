@@ -2,7 +2,7 @@
 # General server config
 #
 server:
-  name: centry-pylon-auth
+  name: ${NAME}
   path: /forward-auth/
   proxy:
     x_for: 1
@@ -14,6 +14,13 @@ server:
     healthz: true
     livez: true
     readyz: true
+
+#
+# Logging
+#
+log:
+  level: info
+
 #
 # SSL CAs
 #
@@ -21,24 +28,29 @@ server:
 #   certs:
 #   - /ssl/ca.crt
 
-pylon_db:
-  engine_url: sqlite:////data/pylon.db
-
 #
 # Exposure
 #
 exposure:
   event_node:
     type: RedisEventNode
-    host: redis
-    port: 6379
-    password: $REDIS_PASSWORD
-    event_queue: exposure_events
-    hmac_key: $HMAC_EXPOSURE_KEY
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
+    password: ${REDIS_PASSWORD}
+    event_queue: ${NAME_PREFIX}_exposure_events
+    hmac_key: ${EXPOSURE_HMAC_KEY}
     hmac_digest: sha512
     callback_workers: 16
+    use_ssl: ${REDIS_SSL}
   expose: true
   announce_interval: 3
+
+#
+# Pylon DB
+#
+pylon_db:
+  engine_url: sqlite:////data/pylon.db
+
 #
 # Local paths to modules and config
 #
@@ -68,48 +80,75 @@ modules:
         delete_git_dir: false
         depth: null
       source: https://github.com/centry-core/bootstrap.git
-      branch: $ALITA_RELEASE
+      branch: ${ALITA_RELEASE}
+
+#
+# Environment configuration
+#
+environment:
+  NLTK_DATA: /data/cache/nltk
+  TRANSFORMERS_CACHE: /data/cache/transformers
+
 #
 # Persistent sessions
 #
 sessions:
   redis:
-    host: redis
-    password: $REDIS_PASSWORD
-  prefix: pylon_auth_session_
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
+    password: ${REDIS_PASSWORD}
+    use_ssl: ${REDIS_SSL}
+  prefix: ${NAME_PREFIX}_auth_session_
+
 #
 # Events queue
 #
 events:
   redis:
-    host: redis
-    password: $REDIS_PASSWORD
-    queue: events
-    hmac_key: $HMAC_EVENTS_KEY
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
+    password: ${REDIS_PASSWORD}
+    use_ssl: ${REDIS_SSL}
+    queue: ${NAME_PREFIX}_events
+    hmac_key: ${EVENT_HMAC_KEY}
     hmac_digest: sha512
     callback_workers: 16
+
 #
 # RPC
 #
 rpc:
   redis:
-    host: redis
-    password: $REDIS_PASSWORD
-    queue: rpc
-    hmac_key: $HMAC_RPC_KEY
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
+    password: ${REDIS_PASSWORD}
+    use_ssl: ${REDIS_SSL}
+    queue: ${NAME_PREFIX}_rpc
+    hmac_key: ${RPC_HMAC_KEY}
     hmac_digest: sha512
     callback_workers: 32
-  id_prefix: "auth_"
+  id_prefix: ${NAME_PREFIX}_auth_rpc_
+
+#
+# SIO
+#
+socketio:
+  redis:
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
+    password: ${REDIS_PASSWORD}
+    use_ssl: ${REDIS_SSL}
+
 #
 # Settings for Flask application
 #
 application:
-  SECRET_KEY: $APPLICATION_SECRET_KEY
-  SERVER_NAME: $APP_HOST
+  SECRET_KEY: ${APPLICATION_SECRET_KEY}
+  SERVER_NAME: ${APP_HOST}
   APPLICATION_ROOT: /forward-auth/
-  SESSION_COOKIE_NAME: centry_auth_session
-  SESSION_COOKIE_DOMAIN: $APP_HOST
+  SESSION_COOKIE_NAME: ${NAME_PREFIX}_auth_session
+  SESSION_COOKIE_DOMAIN: ${APP_HOST}
   SESSION_COOKIE_PATH: /
   SESSION_COOKIE_HTTPONLY: true
   # SESSION_COOKIE_SECURE: true
-  PREFERRED_URL_SCHEME: $APP_PROTO
+  PREFERRED_URL_SCHEME: ${APP_PROTO}

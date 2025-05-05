@@ -1,16 +1,39 @@
+#
+# General server config
+#
+
 server:
-  name: centry-pylon-indexer
+  name: ${NAME}
   path: /
   host: "0.0.0.0"
   port: 8080
+  health:
+    healthz: true
+    livez: true
+    readyz: true
 
+#
+# Logging
+#
+log:
+  level: info
+
+#
+# SSL CAs
+#
 # ssl:
 #   certs:
 #   - /ssl/ca.crt
 
+#
+# Pylon DB
+#
 pylon_db:
   engine_url: sqlite:////data/pylon.db
 
+#
+# Local paths to modules and config
+#
 modules:
   plugins:
     provider:
@@ -37,8 +60,11 @@ modules:
         delete_git_dir: false
         depth: null
       source: https://github.com/centry-core/bootstrap.git
-      branch: $ALITA_RELEASE
+      branch: ${ALITA_RELEASE}
 
+#
+# Environment configuration
+#
 environment:
   ANONYMIZED_TELEMETRY: "False"
   TOKENIZERS_PARALLELISM: "false"

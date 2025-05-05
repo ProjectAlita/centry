@@ -4,3 +4,5 @@ plugins:
   available:
   - configuration
   - models
+
+reload_enabled: false

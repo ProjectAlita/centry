@@ -55,7 +55,7 @@ services:
       - centry
 
   pylon_auth:
-    image: getcarrier/pylon:1.2
+    image: getcarrier/pylon:1.2.1
     restart: unless-stopped
     logging:
       driver: "json-file"
@@ -79,7 +79,7 @@ services:
       - centry
 
   pylon_main:
-    image: getcarrier/pylon:1.2
+    image: getcarrier/pylon:1.2.1
     restart: unless-stopped
     logging:
       driver: "json-file"
@@ -106,7 +106,7 @@ services:
       - centry
 
   pylon_indexer:
-    image: getcarrier/pylon:1.2
+    image: getcarrier/pylon:1.2.1
     restart: unless-stopped
     logging:
       driver: "json-file"
@@ -129,7 +129,7 @@ services:
       - centry
 
   pylon_predicts:
-    image: getcarrier/pylon:1.2
+    image: getcarrier/pylon:1.2.1
     restart: unless-stopped
     logging:
       driver: "json-file"

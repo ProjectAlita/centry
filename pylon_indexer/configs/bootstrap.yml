@@ -1,7 +1,7 @@
 plugin_repo:
 - type: github
   namespace: ProjectAlita
-  branch: main
+  branch: $ALITA_RELEASE
   metadata_provider:
     type: pylon.core.providers.metadata.http
     username: $GITHUB_USERNAME
@@ -9,14 +9,14 @@ plugin_repo:
   source_provider:
     type: pylon.core.providers.source.git
     delete_git_dir: false
-    branch: main
+    branch: $ALITA_RELEASE
     depth: null
     username: $GITHUB_USERNAME
     password: $GITHUB_TOKEN
 
 - type: github
   namespace: centry-core
-  branch: main
+  branch: $ALITA_RELEASE
   metadata_provider:
     type: pylon.core.providers.metadata.http
     username: $GITHUB_USERNAME
@@ -24,14 +24,14 @@ plugin_repo:
   source_provider:
     type: pylon.core.providers.source.git
     delete_git_dir: false
-    branch: main
+    branch: $ALITA_RELEASE
     depth: null
     username: $GITHUB_USERNAME
     password: $GITHUB_TOKEN
 
 - type: github
   namespace: carrier-io
-  branch: main
+  branch: $ALITA_RELEASE
   metadata_provider:
     type: pylon.core.providers.metadata.http
     username: $GITHUB_USERNAME
@@ -39,7 +39,7 @@ plugin_repo:
   source_provider:
     type: pylon.core.providers.source.git
     delete_git_dir: false
-    branch: main
+    branch: $ALITA_RELEASE
     depth: null
     username: $GITHUB_USERNAME
     password: $GITHUB_TOKEN

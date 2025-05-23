@@ -55,7 +55,7 @@ services:
       - centry
 
   pylon_auth:
-    image: getcarrier/pylon:tasknode
+    image: getcarrier/pylon:fallback
     restart: unless-stopped
     logging:
       driver: "json-file"
@@ -78,7 +78,7 @@ services:
       - centry
 
   pylon_main:
-    image: getcarrier/pylon:tasknode
+    image: getcarrier/pylon:fallback
     restart: unless-stopped
     logging:
       driver: "json-file"
@@ -104,7 +104,7 @@ services:
       - centry
 
   pylon_indexer:
-    image: getcarrier/pylon:tasknode
+    image: getcarrier/pylon:fallback
     restart: unless-stopped
     logging:
       driver: "json-file"
@@ -126,7 +126,7 @@ services:
       - centry
 
   pylon_predicts:
-    image: getcarrier/pylon:tasknode
+    image: getcarrier/pylon:fallback
     restart: unless-stopped
     logging:
       driver: "json-file"

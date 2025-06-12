@@ -46,5 +46,6 @@ preordered_plugins:
 #
 - auth_form
 - auth_oidc
+- auth_saml
 #
 - auth_idp_rpc

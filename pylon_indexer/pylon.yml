@@ -43,6 +43,7 @@ modules:
   requirements:
     mode: relaxed
     activation: bulk
+    extra_index_url: https://download.pytorch.org/whl/cpu
     cache: /data/cache/pip
     provider:
       type: folder

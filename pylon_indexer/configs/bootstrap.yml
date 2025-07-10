@@ -44,3 +44,5 @@ preordered_plugins:
 - indexer_worker
 #
 - monitoring
+#
+- provider_worker

@@ -44,6 +44,8 @@ exposure:
     use_ssl: ${REDIS_SSL}
   expose: true
   announce_interval: 3
+  zmq:
+    enabled: true
 
 #
 # Pylon DB

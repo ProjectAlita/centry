@@ -1,41 +1,26 @@
+debug: true
+
+
+mesh:
+  event_node:
+    type: ZeroMQEventNode
+    connect_sub: "tcp://pylon_auth:5010"
+    connect_push: "tcp://pylon_auth:5011"
+    topic: mesh
+    hmac_key: mesh
+    hmac_digest: sha512
+    callback_workers: 16
+    mute_first_failed_connections: 10
+    log_errors: true
+
+
 plugin_repo:
-- type: github
-  namespace: ProjectAlita
-  branch: ${ALITA_RELEASE}
-  #
-  metadata_provider:
-    type: pylon.core.providers.metadata.http
-    username: ${LICENSE_USERNAME}
-    password: ${LICENSE_PASSWORD}
-  #
-  source_provider:
-    type: pylon.core.providers.source.git
-    delete_git_dir: false
-    add_source_data: false
-    add_head_data: false
-    branch: ${ALITA_RELEASE}
-    depth: null
-    username: ${LICENSE_USERNAME}
-    password: ${LICENSE_PASSWORD}
-#
-- type: github
-  namespace: centry-core
-  branch: ${ALITA_RELEASE}
-  #
-  metadata_provider:
-    type: pylon.core.providers.metadata.http
-    username: ${LICENSE_USERNAME}
-    password: ${LICENSE_PASSWORD}
-  #
-  source_provider:
-    type: pylon.core.providers.source.git
-    delete_git_dir: false
-    add_source_data: false
-    add_head_data: false
-    branch: ${ALITA_RELEASE}
-    depth: null
-    username: ${LICENSE_USERNAME}
-    password: ${LICENSE_PASSWORD}
+- type: elitea_github
+  release: ${ALITA_RELEASE}
+  license_username: ${LICENSE_USERNAME}
+  license_password: ${LICENSE_PASSWORD}
+  add_source_data: true
+  add_head_data: true
 
 
 preordered_plugins:

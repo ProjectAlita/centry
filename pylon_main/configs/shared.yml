@@ -3,6 +3,8 @@ settings:
   app_host: ${APP_PROTO}://${APP_HOST}
   app_scheme: ${APP_PROTO}
   #
+  allow_cors: true
+  #
   arbiter_runtime: redis
   redis_host: ${REDIS_HOST}
   redis_port: ${REDIS_PORT}

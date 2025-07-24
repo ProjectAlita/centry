@@ -30,30 +30,14 @@ preordered_plugins:
 - projects
 - secrets
 - artifacts
-- integrations
-- tasks
 - scheduling
 #
 - theme
 - design-system
 #
-- s3_integration
-#
-- usage
-#
 - logging_hub
 #
 - worker_client
-#
-- ai_dial
-- open_ai
-- open_ai_azure
-- hugging_face
-- vertex_ai
-- amazon_bedrock
-- ai_preload_shim
-#
-- pgvector
 #
 - promptlib_shared
 - prompt_lib
@@ -68,8 +52,6 @@ preordered_plugins:
 #
 - monitoring
 - monitoring_hub
-#
-- integrations_configurations
 #
 - mcp_sse
 #

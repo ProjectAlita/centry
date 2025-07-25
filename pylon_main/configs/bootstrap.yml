@@ -41,7 +41,6 @@ preordered_plugins:
 #
 - promptlib_shared
 - prompt_lib
-- datasources
 - applications
 - chat
 #

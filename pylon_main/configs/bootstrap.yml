@@ -40,7 +40,6 @@ preordered_plugins:
 - worker_client
 #
 - promptlib_shared
-- prompt_lib
 - applications
 - chat
 #

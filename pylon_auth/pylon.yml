@@ -76,11 +76,8 @@ modules:
   preload:
     bootstrap:
       provider:
-        type: git
-        delete_git_dir: false
-        depth: null
-      source: https://github.com/centry-core/bootstrap.git
-      branch: ${ALITA_RELEASE}
+        type: http_tar
+      source: https://repo.elitea.ai/target/public/depot/${ALITA_RELEASE}/plugins/bootstrap/source
 
 #
 # Environment configuration

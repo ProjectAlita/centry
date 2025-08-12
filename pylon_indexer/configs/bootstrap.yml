@@ -1,41 +1,7 @@
 plugin_repo:
-- type: github
-  namespace: ProjectAlita
-  branch: ${ALITA_RELEASE}
-  #
-  metadata_provider:
-    type: pylon.core.providers.metadata.http
-    username: ${LICENSE_USERNAME}
-    password: ${LICENSE_PASSWORD}
-  #
-  source_provider:
-    type: pylon.core.providers.source.git
-    delete_git_dir: false
-    add_source_data: false
-    add_head_data: false
-    branch: ${ALITA_RELEASE}
-    depth: null
-    username: ${LICENSE_USERNAME}
-    password: ${LICENSE_PASSWORD}
-#
-- type: github
-  namespace: centry-core
-  branch: ${ALITA_RELEASE}
-  #
-  metadata_provider:
-    type: pylon.core.providers.metadata.http
-    username: ${LICENSE_USERNAME}
-    password: ${LICENSE_PASSWORD}
-  #
-  source_provider:
-    type: pylon.core.providers.source.git
-    delete_git_dir: false
-    add_source_data: false
-    add_head_data: false
-    branch: ${ALITA_RELEASE}
-    depth: null
-    username: ${LICENSE_USERNAME}
-    password: ${LICENSE_PASSWORD}
+- type: repo_depot
+  release: ${ALITA_RELEASE}
+  license_token: ${LICENSE_TOKEN}
 
 
 preordered_plugins:

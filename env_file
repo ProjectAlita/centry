@@ -1,0 +1,96 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+
+alita_versions=("1.6.0" "1.5.0-beta" "1.5.2-beta" "main")
+
+printf "Configuring containers version...\n"
+read -r -p "Eneter PGSQL version [default: 16.0]: " pgsql_ver
+PG_SQL_VER=${pgsql_ver:-16.0}
+export PG_SQL_VER
+
+read -r -p "Eneter PG Vector version [default: pg16]: " pg_vector_ver
+PG_VECTOR_VER=${pg_vector_ver:-pg16}
+export PG_VECTOR_VER
+
+read -r -p "Eneter Pylon version [default: 1.2.8]: " pylon_ver
+PYLON_VER=${pylon_ver:-"1.2.8"}
+export PYLON_VER
+
+read -r -p "HTTP port [default: 80]: " http_port
+HTTP_HOST_POR=${http_port:-80}
+export HTTP_HOST_POR
+
+read -r -p "Enabled TLS? If true don't forget to copy certs into ssl/ [default: false]: " tls_enabled
+HTTPS=${tls_enabled:-false}
+export HTTPS
+
+if [ "${tls_enabled}" ]; then
+    read -r -p "HTTPS port [default: 443]: " https_port
+    HTTPS_HOST_PORT=${https_port:-443}
+    export HTTPS_HOST_PORT
+fi
+
+
+printf "\nConfiguring Alita...\n"
+read -r -p "Eneter host IP address or DNS: " ip_addr
+APP_HOST=${ip_addr}
+export APP_HOST
+if [[ ${APP_HOST} == "" ]]; then
+    echo "Host IP address or DNS can not be empty !!!"
+    exit 1
+fi
+
+
+read -r -p "Eneter Alita release [default: main] " al_release
+ALITA_RELEASE="${al_release:-main}"
+export ALITA_RELEASE
+
+
+if [[ " ${alita_versions[*]} " == *" ${ALITA_RELEASE} "* ]]; then
+  read -r -p "Enter GitHub username: " gh_username
+  LIC_USERNAME="${gh_username}"
+  export LIC_USERNAME
+  read -r -s -p "Enter GitHub token [HIDDEN]: " gh_token
+  printf '\n'
+  LIC_PASSWORD="${gh_token}"
+  export LIC_PASSWORD
+
+  unset LICENSE_TOKEN || true
+else
+  read -r -s -p "Enter License token [HIDDEN]: " lic_token
+  printf '\n'
+  LICENSE_TOKEN="${lic_token}"
+  export LICENSE_TOKEN
+
+  unset LIC_USERNAME LIC_PASSWORD || true
+fi
+
+read -r -s -p "Eneter Alita Admin password [default: admin] " al_admin_pass
+printf '\n'
+ADMIN_PASSWORD=${al_admin_pass:-admin}
+export ADMIN_PASSWORD
+
+read -r -s -p "Eneter REDIS password [default: redis_admin_pwd] " redis_pass
+printf '\n'
+REDIS_PASSWORD=${redis_pass:-redis_admin_pwd}
+export REDIS_PASSWORD
+
+read -r -s -p "Eneter PGSQL password [default: pg_admin_pass] " pg_pass
+printf '\n'
+PG_PASSWORD=${pg_pass:-pg_admin_pass}
+export PG_PASSWORD
+
+read -r -s -p "Eneter APP_AUTH_SECRET [skip to autogenerate] " app_auth_secr
+printf '\n'
+APP_AUTH_SECRET=${app_auth_secr}
+export APP_AUTH_SECRET
+read -r -s -p "Eneter APP_MAIN_SECRET [skip to autogenerate] " app_main_secr
+printf '\n'
+APP_MAIN_SECRET=${app_main_secr}
+export APP_MAIN_SECRET
+read -r -s -p "Eneter MASTER_KEY [skip to autogenerate] " app_master
+printf '\n'
+MASTER_KEY=${app_master}
+export MASTER_KEY
+

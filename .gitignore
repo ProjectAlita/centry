@@ -167,3 +167,13 @@ pylon_*/cache/
 pylon_*/plugins/
 pylon_*/storage/
 pylon_*/requirements/
+pylon_*/pylon.db
+pylon_main/libcloud/
+pylon_main/static/
+
+# Terraform-specific
+tmpl/.terraform/
+tmpl/.terraform.lock.hcl
+tmpl/terraform.tfstate
+tmpl/terraform.tfstate.backup
+.label

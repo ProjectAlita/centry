@@ -33,3 +33,7 @@ settings:
     kwargs:
       key: /data/libcloud/storage
   storage_libcloud_encoder: base64
+
+
+apply_shared_metadata: true
+apply_project_metadata: true

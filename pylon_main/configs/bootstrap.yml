@@ -51,8 +51,10 @@ preordered_plugins:
 - monitoring
 - monitoring_hub
 #
-- mcp_sse
+- configurations
+#
+- runtime_interface_litellm
 #
 - provider_hub
-- configurations
-
+#
+- mcp_sse

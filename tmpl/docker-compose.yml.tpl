@@ -1,3 +1,5 @@
+---
+
 services:
   redis:
     image: redis:alpine
@@ -15,9 +17,9 @@ services:
       - redis-data:/data
     networks:
       - centry
-
+  
   postgres:
-    image: postgres:16.0
+    image: postgres:${PG_SQL_VER}
     restart: unless-stopped
     logging:
       driver: "json-file"
@@ -35,7 +37,7 @@ services:
       - centry
 
   pgvector:
-    image: pgvector/pgvector:pg16
+    image: pgvector/pgvector:${PG_VECTOR_VER}
     restart: unless-stopped
     logging:
       driver: "json-file"
@@ -53,7 +55,7 @@ services:
       - centry
 
   pylon_auth:
-    image: getcarrier/pylon:1.2.8
+    image: getcarrier/pylon:${PYLON_VER}
     restart: unless-stopped
     logging:
       driver: "json-file"
@@ -69,15 +71,15 @@ services:
       - PYLON_CONFIG_SEED=file:/data/pylon.yml
     volumes:
       - ./pylon_auth:/data
-      - ./ssl:/ssl
+      %{ if HTTPS }- ./ssl:/ssl%{ endif }
     depends_on:
       - redis
       - postgres
     networks:
       - centry
-
+  
   pylon_main:
-    image: getcarrier/pylon:1.2.8
+    image: getcarrier/pylon:${PYLON_VER}
     restart: unless-stopped
     logging:
       driver: "json-file"
@@ -93,10 +95,10 @@ services:
       - PYLON_CONFIG_SEED=file:/data/pylon.yml
     volumes:
       - ./pylon_main:/data
-      - ./ssl:/ssl
+      %{ if HTTPS }- ./ssl:/ssl%{ endif }
     ports:
-      - "80:8080"
-      # - 443:8443
+      - ${HTTP_HOST_PORT}:8080
+      %{ if HTTPS }- ${HTTPS_HOST_PORT}:8443%{ endif }
     depends_on:
       - redis
       - postgres
@@ -104,7 +106,7 @@ services:
       - centry
 
   pylon_indexer:
-    image: getcarrier/pylon:1.2.8
+    image: getcarrier/pylon:${PYLON_VER}
     restart: unless-stopped
     logging:
       driver: "json-file"
@@ -120,14 +122,14 @@ services:
       - PYLON_CONFIG_SEED=file:/data/pylon.yml
     volumes:
       - ./pylon_indexer:/data
-      - ./ssl:/ssl
+      %{ if HTTPS }- ./ssl:/ssl%{ endif }
     depends_on:
       - redis
     networks:
       - centry
 
   pylon_predicts:
-    image: getcarrier/pylon:1.2.8
+    image: getcarrier/pylon:${PYLON_VER}
     restart: unless-stopped
     logging:
       driver: "json-file"
@@ -143,7 +145,7 @@ services:
       - PYLON_CONFIG_SEED=file:/data/pylon.yml
     volumes:
       - ./pylon_predicts:/data
-      - ./ssl:/ssl
+      %{ if HTTPS }- ./ssl:/ssl%{ endif }
     depends_on:
       - redis
     networks:

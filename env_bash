@@ -18,14 +18,14 @@ PYLON_VER=${pylon_ver:-"1.2.8"}
 export PYLON_VER
 
 read -r -p "HTTP port [default: 80]: " http_port
-HTTP_HOST_POR=${http_port:-80}
-export HTTP_HOST_POR
+HTTP_HOST_PORT=${http_port:-80}
+export HTTP_HOST_PORT
 
 read -r -p "Enabled TLS? If true don't forget to copy certs into ssl/ [default: false]: " tls_enabled
 HTTPS=${tls_enabled:-false}
 export HTTPS
 
-if [ "${tls_enabled}" ]; then
+if [[ "${tls_enabled,,}" == "true" ]]; then
     read -r -p "HTTPS port [default: 443]: " https_port
     HTTPS_HOST_PORT=${https_port:-443}
     export HTTPS_HOST_PORT

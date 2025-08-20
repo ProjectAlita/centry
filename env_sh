@@ -1,0 +1,132 @@
+#!/bin/sh
+
+ALITA_ALLOWED="1.6.0 1.5.0-beta 1.5.2-beta main"
+
+printf "Configuring containers version...\n"
+
+printf "Enter PGSQL version [default: 16.0]: "
+IFS= read -r pgsql_ver
+PG_SQL_VER=${pgsql_ver:-16.0}
+export PG_SQL_VER
+
+printf "Enter PG Vector version [default: pg16]: "
+IFS= read -r pg_vector_ver
+PG_VECTOR_VER=${pg_vector_ver:-pg16}
+export PG_VECTOR_VER
+
+printf "Enter Pylon version [default: 1.2.8]: "
+IFS= read -r pylon_ver
+PYLON_VER=${pylon_ver:-1.2.8}
+export PYLON_VER
+
+printf "HTTP port [default: 80]: "
+IFS= read -r http_port
+HTTP_HOST_PORT=${http_port:-80}
+export HTTP_HOST_PORT
+
+printf "Enable TLS? true/false [default: false]: "
+IFS= read -r tls_enabled
+tls_norm=$(printf "%s" "${tls_enabled:-}" | tr '[:upper:]' '[:lower:]')
+case "$tls_norm" in
+  true|1|yes|y) HTTPS=true ;;
+  *)            HTTPS=false ;;
+esac
+unset tls_norm
+export HTTPS
+
+if [ "$HTTPS" = "true" ]; then
+  printf "HTTPS port [default: 443]: "
+  IFS= read -r https_port
+  HTTPS_HOST_PORT=${https_port:-443}
+  export HTTPS_HOST_PORT
+fi
+
+printf "\nConfiguring Alita...\n"
+printf "Enter host IP address or DNS: "
+IFS= read -r ip_addr
+APP_HOST=${ip_addr}
+export APP_HOST
+if [ -z "$APP_HOST" ]; then
+  echo "Host IP address or DNS cannot be empty!" >&2
+  return 1
+fi
+
+printf "Enter Alita release [default: main]: "
+IFS= read -r al_release
+ALITA_RELEASE=${al_release:-main}
+export ALITA_RELEASE
+
+case " $ALITA_ALLOWED " in
+  *" $ALITA_RELEASE "*) in_allowed=1 ;;
+  *)                   in_allowed=0 ;;
+esac
+
+if [ "$in_allowed" -eq 1 ]; then
+  printf "Enter GitHub username: "
+  IFS= read -r gh_username
+  LIC_USERNAME=${gh_username}
+  export LIC_USERNAME
+
+  printf "Enter GitHub token [HIDDEN]: "
+  if [ -t 0 ]; then stty -echo 2>/dev/null; fi
+  IFS= read -r LIC_PASSWORD
+  if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
+  export LIC_PASSWORD
+
+  unset LICENSE_TOKEN 2>/dev/null || true
+else
+  printf "Enter License token [HIDDEN]: "
+  if [ -t 0 ]; then stty -echo 2>/dev/null; fi
+  IFS= read -r LICENSE_TOKEN
+  if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
+  export LICENSE_TOKEN
+
+  unset LIC_USERNAME 2>/dev/null || true
+  unset LIC_PASSWORD 2>/dev/null || true
+fi
+
+printf "Enter Alita Admin password [default: admin]: "
+if [ -t 0 ]; then stty -echo 2>/dev/null; fi
+IFS= read -r _tmp
+if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
+ADMIN_PASSWORD=${_tmp:-admin}
+unset _tmp
+export ADMIN_PASSWORD
+
+printf "Enter REDIS password [default: redis_admin_pwd]: "
+if [ -t 0 ]; then stty -echo 2>/dev/null; fi
+IFS= read -r _tmp
+if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
+REDIS_PASSWORD=${_tmp:-redis_admin_pwd}
+unset _tmp
+export REDIS_PASSWORD
+
+printf "Enter PGSQL password [default: pg_admin_pass]: "
+if [ -t 0 ]; then stty -echo 2>/dev/null; fi
+IFS= read -r _tmp
+if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
+PG_PASSWORD=${_tmp:-pg_admin_pass}
+unset _tmp
+export PG_PASSWORD
+
+printf "Enter APP_AUTH_SECRET [skip to autogenerate]: "
+if [ -t 0 ]; then stty -echo 2>/dev/null; fi
+IFS= read -r APP_AUTH_SECRET
+if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
+export APP_AUTH_SECRET
+
+printf "Enter APP_MAIN_SECRET [skip to autogenerate]: "
+if [ -t 0 ]; then stty -echo 2>/dev/null; fi
+IFS= read -r APP_MAIN_SECRET
+if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
+export APP_MAIN_SECRET
+
+printf "Enter MASTER_KEY [skip to autogenerate]: "
+if [ -t 0 ]; then stty -echo 2>/dev/null; fi
+IFS= read -r MASTER_KEY
+if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
+export MASTER_KEY
+
+unset in_allowed ALITA_ALLOWED
+printf "\nDone. Environment variables exported for Terraform.\n"
+

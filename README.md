@@ -11,12 +11,17 @@ Next steps provides quick start and interactive service configuring
 1. Run next commands to install terraform binary for the current user ($HOME/.local/bin)
 ```sh
 make get_tools
-source ~/.bashrc
+source ~/.bashrc # for bash
+# or 
+source ~/.zshrc  # for zsh
 ```
 
-2. Source **env_file** in the root of repo for configuring service
+2. Source **env_file** in the root of repo for configuring service according your shell 
 ```sh
-source env_file
+source env_bash  # for bash
+# or
+source env_sh  # for zsh
+
 ```
 
 3. Copy TLS/SSL certs (server.crt, server.key, ca.crt) into ssl dir if you have them **[Optional]**

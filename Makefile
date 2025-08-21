@@ -4,7 +4,7 @@ SHELL := /bin/bash
 FREE_SPACE_THRESHOLD ?= 30
 PG_VECTOR_VERSION ?= pg16
 PG_VERSION ?= 16.0
-CARRIER_VERSION ?= 1.2.7
+PYLON_VER ?= 1.2.7
 MS_SDK_VERSION ?= 8.0
 MS_ASPNET_VERSION ?= 9.0
 HTTP_HOST_PORT ?= 80
@@ -97,7 +97,7 @@ clean_images:
 	@rm -f .label
 	@rm -f  docker-compose.yml
 	@rm -f ./envs/override.env
-	@docker image rm pgvector/pgvector:$(PG_VECTOR_VERSION) getcarrier/pylon:$(CARRIER_VERSION) mcr.microsoft.com/dotnet/sdk:$(MS_SDK_VERSION) mcr.microsoft.com/dotnet/aspnet:$(MS_ASPNET_VERSION) postgres:$(PG_VERSION) || true
+	@docker image rm pgvector/pgvector:$(PG_VECTOR_VERSION) getcarrier/pylon:$(PYLON_VER) mcr.microsoft.com/dotnet/sdk:$(MS_SDK_VERSION) mcr.microsoft.com/dotnet/aspnet:$(MS_ASPNET_VERSION) postgres:$(PG_VERSION) || true
 	@echo "Cleanup complete."
 
 clean_volumes:
@@ -198,7 +198,7 @@ init:
 
 plan:
 	@echo "Plan rendering docker compose"
-	@$(TERRAFORM_BIN) -chdir=./tmpl plan -var PYLON_VER=$(CARRIER_VERSION) -var PG_SQL_VER=$(PG_VERSION) -var PG_VECTOR_VER=$(PG_VECTOR_VERSION) \
+	@$(TERRAFORM_BIN) -chdir=./tmpl plan -var PYLON_VER=$(PYLON_VER) -var PG_SQL_VER=$(PG_VERSION) -var PG_VECTOR_VER=$(PG_VECTOR_VERSION) \
 	        -var HTTP_HOST_PORT=$(HTTP_HOST_PORT) -var HTTPS_HOST_PORT=$(HTTPS_HOST_PORT) -var HTTPS=$(HTTPS) \
 	        -var ALITA_RELEASE=$(ALITA_RELEASE) -var ADMIN_PASSWORD=$(ADMIN_PASSWORD) \
 	        -var APP_AUTH_SECRET=$(APP_AUTH_SECRET) -var APP_MAIN_SECRET=$(APP_MAIN_SECRET) \
@@ -206,7 +206,7 @@ plan:
 	        -var APP_HOST=$(APP_HOST) -var LIC_USERNAME=$(LIC_USERNAME) -var LIC_PASSWORD=$(LIC_PASSWORD) -var LICENSE_TOKEN=$(LICENSE_TOKEN)
 apply:
 	@echo "Rendering docker compose"
-	@$(TERRAFORM_BIN) -chdir=./tmpl apply -auto-approve -var PYLON_VER=$(CARRIER_VERSION) -var PG_SQL_VER=$(PG_VERSION) -var PG_VECTOR_VER=$(PG_VECTOR_VERSION) \
+	@$(TERRAFORM_BIN) -chdir=./tmpl apply -auto-approve -var PYLON_VER=$(PYLON_VER) -var PG_SQL_VER=$(PG_VERSION) -var PG_VECTOR_VER=$(PG_VECTOR_VERSION) \
 	        -var HTTP_HOST_PORT=$(HTTP_HOST_PORT) -var HTTPS_HOST_PORT=$(HTTPS_HOST_PORT) -var HTTPS=$(HTTPS) \
 	        -var ALITA_RELEASE=$(ALITA_RELEASE) -var ADMIN_PASSWORD=$(ADMIN_PASSWORD) \
 	        -var APP_AUTH_SECRET=$(APP_AUTH_SECRET) -var APP_MAIN_SECRET=$(APP_MAIN_SECRET) \

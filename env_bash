@@ -85,12 +85,34 @@ read -r -s -p "Eneter APP_AUTH_SECRET [skip to autogenerate] " app_auth_secr
 printf '\n'
 APP_AUTH_SECRET=${app_auth_secr}
 export APP_AUTH_SECRET
+
 read -r -s -p "Eneter APP_MAIN_SECRET [skip to autogenerate] " app_main_secr
 printf '\n'
 APP_MAIN_SECRET=${app_main_secr}
 export APP_MAIN_SECRET
+
 read -r -s -p "Eneter MASTER_KEY [skip to autogenerate] " app_master
 printf '\n'
 MASTER_KEY=${app_master}
 export MASTER_KEY
 
+read -r -s -p "Eneter EVENT_HMAC_KEY [skip to autogenerate] " app_event_hmac
+printf '\n'
+EVENT_HMAC_KEY=${app_event_hmac}
+export EVENT_HMAC_KEY
+
+read -r -s -p "Eneter RPC_HMAC_KEY [skip to autogenerate] " app_rpc_hmac
+printf '\n'
+RPC_HMAC_KEY=${app_rpc_hmac}
+export RPC_HMAC_KEY
+
+read -r -s -p "Eneter INDEXER_HMAC_KEY [skip to autogenerate] " app_indexer_hmac
+printf '\n'
+INDEXER_HMAC_KEY=${app_indexer_hmac}
+export INDEXER_HMAC_KEY
+export MASTER_KEY
+
+read -r -s -p "Eneter EXPOSURE_HMAC_KEY [skip to autogenerate] " app_exposure_hmac
+printf '\n'
+EXPOSURE_HMAC_KEY=${app_exposure_hmac}
+export EXPOSURE_HMAC_KEY

@@ -127,6 +127,30 @@ IFS= read -r MASTER_KEY
 if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
 export MASTER_KEY
 
+printf "Enter EVENT_HMAC_KEY [skip to autogenerate]: "
+if [ -t 0 ]; then stty -echo 2>/dev/null; fi
+IFS= read -r EVENT_HMAC_KEY
+if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
+export EVENT_HMAC_KEY
+
+printf "Enter RPC_HMAC_KEY [skip to autogenerate]: "
+if [ -t 0 ]; then stty -echo 2>/dev/null; fi
+IFS= read -r RPC_HMAC_KEY
+if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
+export RPC_HMAC_KEY
+
+printf "Enter EXPOSURE_HMAC_KEY [skip to autogenerate]: "
+if [ -t 0 ]; then stty -echo 2>/dev/null; fi
+IFS= read -r EXPOSURE_HMAC_KEY
+if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
+export EXPOSURE_HMAC_KEY
+
+printf "Enter INDEXER_HMAC_KEY [skip to autogenerate]: "
+if [ -t 0 ]; then stty -echo 2>/dev/null; fi
+IFS= read -r INDEXER_HMAC_KEY
+if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
+export INDEXER_HMAC_KEY
+
 unset in_allowed ALITA_ALLOWED
 printf "\nDone. Environment variables exported for Terraform.\n"
 

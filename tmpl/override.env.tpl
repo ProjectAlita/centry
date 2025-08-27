@@ -5,7 +5,7 @@ COOKIES_SECURE=false
 
 ALITA_RELEASE=${ALITA_RELEASE}
 
-%{ if contains(["1.6.0", "1.5.2-beta", "1.5.0-beta", "main"], ALITA_RELEASE) }
+%{ if ALITA_REMOTE_REPO == 1}
 LICENSE_USERNAME=${LIC_USERNAME}
 LICENSE_PASSWORD=${LIC_PASSWORD}
 %{else}

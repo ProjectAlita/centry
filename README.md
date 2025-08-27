@@ -16,11 +16,9 @@ source ~/.bashrc # for bash
 source ~/.zshrc  # for zsh
 ```
 
-2. Source **env_file** in the root of repo for configuring service according your shell 
+2. Source **env_file** in the root of repo for configuring service
 ```sh
-source env_bash  # for bash
-# or
-source env_sh  # for zsh
+source env_file # for bash/sh/zsh
 
 ```
 

@@ -73,6 +73,13 @@ variable "ALITA_RELEASE" {
   description = "Alita release"
 }
 
+variable "ALITA_REMOTE_REPO" {
+  type        = string
+  default     = "1"
+  description = "Alita remote repository"
+}
+
+
 variable "LIC_USERNAME" {
   type        = string
   default     = "github_username"
@@ -198,6 +205,7 @@ resource "local_file" "override" {
       INDEXER_HMAC_KEY  = var.INDEXER_HMAC_KEY != "" ? var.INDEXER_HMAC_KEY : random_id.indexer_hmac_key.b64_url
       REDIS_PASSWORD    = var.REDIS_PASSWORD
       PG_PASSWORD       = var.PG_PASSWORD
+      ALITA_REMOTE_REPO = var.ALITA_REMOTE_REPO
 
     }
   )
@@ -235,7 +243,6 @@ resource "local_file" "pylon_main" {
   filename = "../pylon_main/pylon.yml"
 }
 
-
 resource "local_file" "pylon_predicts" {
   content = templatefile(
     "${path.module}/pylon_predicts.yml.tpl",
@@ -244,4 +251,44 @@ resource "local_file" "pylon_predicts" {
     }
   )
   filename = "../pylon_predicts/pylon.yml"
+}
+
+resource "local_file" "bootstrap_pylon_auth" {
+  content = templatefile(
+    "${path.module}/bootstrap_auth.yml.tpl",
+    {
+      ALITA_REMOTE_REPO = var.ALITA_REMOTE_REPO
+    }
+  )
+  filename = "../pylon_auth/configs/bootstrap.yml"
+}
+
+resource "local_file" "bootstrap_pylon_indexer" {
+  content = templatefile(
+    "${path.module}/bootstrap_indexer.yml.tpl",
+    {
+      ALITA_REMOTE_REPO = var.ALITA_REMOTE_REPO
+    }
+  )
+  filename = "../pylon_indexer/configs/bootstrap.yml"
+}
+
+resource "local_file" "bootstrap_pylon_main" {
+  content = templatefile(
+    "${path.module}/bootstrap_main.yml.tpl",
+    {
+      ALITA_REMOTE_REPO = var.ALITA_REMOTE_REPO
+    }
+  )
+  filename = "../pylon_main/configs/bootstrap.yml"
+}
+
+resource "local_file" "bootstrap_pylon_predicts" {
+  content = templatefile(
+    "${path.module}/bootstrap_predicts.yml.tpl",
+    {
+      ALITA_REMOTE_REPO = var.ALITA_REMOTE_REPO
+    }
+  )
+  filename = "../pylon_predicts/configs/bootstrap.yml"
 }

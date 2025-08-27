@@ -1,7 +1,5 @@
 #!/bin/sh
 
-ALITA_ALLOWED="1.6.0 1.5.0-beta 1.5.2-beta main"
-
 printf "Configuring containers version...\n"
 
 printf "Enter PGSQL version [default: 16.0]: "
@@ -51,17 +49,22 @@ if [ -z "$APP_HOST" ]; then
   return 1
 fi
 
-printf "Enter Alita release [default: main]: "
+printf "Enter Alita release [ (1.7.0, 1.6.0, 1.6.0-repo, main), default: main]: "
 IFS= read -r al_release
 ALITA_RELEASE=${al_release:-main}
 export ALITA_RELEASE
 
-case " $ALITA_ALLOWED " in
-  *" $ALITA_RELEASE "*) in_allowed=1 ;;
-  *)                   in_allowed=0 ;;
+printf "Enter Alita remote repo [ (1 - elitea_github, 2- repo_depot), default: elitea_github]: "
+IFS= read -r al_remote_repo
+ALITA_REMOTE_REPO=${al_remote_repo:-1}
+export ALITA_REMOTE_REPO
+
+case "$ALITA_REMOTE_REPO" in
+  1) export legacy=1 ;;
+  2) export legacy=0 ;;
 esac
 
-if [ "$in_allowed" -eq 1 ]; then
+if [ "$legacy" -eq 1 ]; then
   printf "Enter GitHub username: "
   IFS= read -r gh_username
   LIC_USERNAME=${gh_username}
@@ -85,7 +88,7 @@ else
   unset LIC_PASSWORD 2>/dev/null || true
 fi
 
-printf "Enter Alita Admin password [default: admin]: "
+printf "Enter Alita Admin password [HIDDEN, default: admin]: "
 if [ -t 0 ]; then stty -echo 2>/dev/null; fi
 IFS= read -r _tmp
 if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
@@ -93,7 +96,7 @@ ADMIN_PASSWORD=${_tmp:-admin}
 unset _tmp
 export ADMIN_PASSWORD
 
-printf "Enter REDIS password [default: redis_admin_pwd]: "
+printf "Enter REDIS password [HIDDEN, default: redis_admin_pwd]: "
 if [ -t 0 ]; then stty -echo 2>/dev/null; fi
 IFS= read -r _tmp
 if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
@@ -101,7 +104,7 @@ REDIS_PASSWORD=${_tmp:-redis_admin_pwd}
 unset _tmp
 export REDIS_PASSWORD
 
-printf "Enter PGSQL password [default: pg_admin_pass]: "
+printf "Enter PGSQL password [HIDDEN, default: pg_admin_pass]: "
 if [ -t 0 ]; then stty -echo 2>/dev/null; fi
 IFS= read -r _tmp
 if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
@@ -109,43 +112,43 @@ PG_PASSWORD=${_tmp:-pg_admin_pass}
 unset _tmp
 export PG_PASSWORD
 
-printf "Enter APP_AUTH_SECRET [skip to autogenerate]: "
+printf "Enter APP_AUTH_SECRET [HIDDEN,skip to autogenerate]: "
 if [ -t 0 ]; then stty -echo 2>/dev/null; fi
 IFS= read -r APP_AUTH_SECRET
 if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
 export APP_AUTH_SECRET
 
-printf "Enter APP_MAIN_SECRET [skip to autogenerate]: "
+printf "Enter APP_MAIN_SECRET [HIDDEN, skip to autogenerate]: "
 if [ -t 0 ]; then stty -echo 2>/dev/null; fi
 IFS= read -r APP_MAIN_SECRET
 if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
 export APP_MAIN_SECRET
 
-printf "Enter MASTER_KEY [skip to autogenerate]: "
+printf "Enter MASTER_KEY [HIDDEN, skip to autogenerate]: "
 if [ -t 0 ]; then stty -echo 2>/dev/null; fi
 IFS= read -r MASTER_KEY
 if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
 export MASTER_KEY
 
-printf "Enter EVENT_HMAC_KEY [skip to autogenerate]: "
+printf "Enter EVENT_HMAC_KEY [HIDDEN, skip to autogenerate]: "
 if [ -t 0 ]; then stty -echo 2>/dev/null; fi
 IFS= read -r EVENT_HMAC_KEY
 if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
 export EVENT_HMAC_KEY
 
-printf "Enter RPC_HMAC_KEY [skip to autogenerate]: "
+printf "Enter RPC_HMAC_KEY [HIDDEN, skip to autogenerate]: "
 if [ -t 0 ]; then stty -echo 2>/dev/null; fi
 IFS= read -r RPC_HMAC_KEY
 if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
 export RPC_HMAC_KEY
 
-printf "Enter EXPOSURE_HMAC_KEY [skip to autogenerate]: "
+printf "Enter EXPOSURE_HMAC_KEY [HIDDEN, skip to autogenerate]: "
 if [ -t 0 ]; then stty -echo 2>/dev/null; fi
 IFS= read -r EXPOSURE_HMAC_KEY
 if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
 export EXPOSURE_HMAC_KEY
 
-printf "Enter INDEXER_HMAC_KEY [skip to autogenerate]: "
+printf "Enter INDEXER_HMAC_KEY [HIDDEN, skip to autogenerate]: "
 if [ -t 0 ]; then stty -echo 2>/dev/null; fi
 IFS= read -r INDEXER_HMAC_KEY
 if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi

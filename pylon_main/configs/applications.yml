@@ -11,6 +11,8 @@ event_node:
   use_ssl: ${REDIS_SSL}
   log_errors: true
 
+# base_url: http://pylon_main:8080
+
 nltk_data: /data/cache/nltk
 
 application_icon_path: /data/static/application_icon

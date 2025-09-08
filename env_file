@@ -1,96 +1,159 @@
-#!/usr/bin/env bash
-set -euo pipefail
-
-
-alita_versions=("1.6.0" "1.5.0-beta" "1.5.2-beta" "main")
+#!/bin/sh
 
 printf "Configuring containers version...\n"
-read -r -p "Eneter PGSQL version [default: 16.0]: " pgsql_ver
+
+printf "Enter PGSQL version [default: 16.0]: "
+IFS= read -r pgsql_ver
 PG_SQL_VER=${pgsql_ver:-16.0}
 export PG_SQL_VER
 
-read -r -p "Eneter PG Vector version [default: pg16]: " pg_vector_ver
+printf "Enter PG Vector version [default: pg16]: "
+IFS= read -r pg_vector_ver
 PG_VECTOR_VER=${pg_vector_ver:-pg16}
 export PG_VECTOR_VER
 
-read -r -p "Eneter Pylon version [default: 1.2.8]: " pylon_ver
-PYLON_VER=${pylon_ver:-"1.2.8"}
+printf "Enter Pylon version [default: 1.2.8]: "
+IFS= read -r pylon_ver
+PYLON_VER=${pylon_ver:-1.2.8}
 export PYLON_VER
 
-read -r -p "HTTP port [default: 80]: " http_port
-HTTP_HOST_POR=${http_port:-80}
-export HTTP_HOST_POR
+printf "HTTP port [default: 80]: "
+IFS= read -r http_port
+HTTP_HOST_PORT=${http_port:-80}
+export HTTP_HOST_PORT
 
-read -r -p "Enabled TLS? If true don't forget to copy certs into ssl/ [default: false]: " tls_enabled
-HTTPS=${tls_enabled:-false}
+printf "Enable TLS? true/false [default: false]: "
+IFS= read -r tls_enabled
+tls_norm=$(printf "%s" "${tls_enabled:-}" | tr '[:upper:]' '[:lower:]')
+case "$tls_norm" in
+  true|1|yes|y) HTTPS=true ;;
+  *)            HTTPS=false ;;
+esac
+unset tls_norm
 export HTTPS
 
-if [ "${tls_enabled}" ]; then
-    read -r -p "HTTPS port [default: 443]: " https_port
-    HTTPS_HOST_PORT=${https_port:-443}
-    export HTTPS_HOST_PORT
+if [ "$HTTPS" = "true" ]; then
+  printf "HTTPS port [default: 443]: "
+  IFS= read -r https_port
+  HTTPS_HOST_PORT=${https_port:-443}
+  export HTTPS_HOST_PORT
 fi
-
 
 printf "\nConfiguring Alita...\n"
-read -r -p "Eneter host IP address or DNS: " ip_addr
+printf "Enter host IP address or DNS: "
+IFS= read -r ip_addr
 APP_HOST=${ip_addr}
 export APP_HOST
-if [[ ${APP_HOST} == "" ]]; then
-    echo "Host IP address or DNS can not be empty !!!"
-    exit 1
+if [ -z "$APP_HOST" ]; then
+  echo "Host IP address or DNS cannot be empty!" >&2
+  return 1
 fi
 
-
-read -r -p "Eneter Alita release [default: main] " al_release
-ALITA_RELEASE="${al_release:-main}"
+printf "Enter Alita release [ (1.7.0, 1.6.0, 1.6.0-repo, main), default: main]: "
+IFS= read -r al_release
+ALITA_RELEASE=${al_release:-main}
 export ALITA_RELEASE
 
+printf "Enter Alita remote repo [ (1 - elitea_github, 2- repo_depot), default: elitea_github]: "
+IFS= read -r al_remote_repo
+ALITA_REMOTE_REPO=${al_remote_repo:-1}
+export ALITA_REMOTE_REPO
 
-if [[ " ${alita_versions[*]} " == *" ${ALITA_RELEASE} "* ]]; then
-  read -r -p "Enter GitHub username: " gh_username
-  LIC_USERNAME="${gh_username}"
+case "$ALITA_REMOTE_REPO" in
+  1) export legacy=1 ;;
+  2) export legacy=0 ;;
+esac
+
+if [ "$legacy" -eq 1 ]; then
+  printf "Enter GitHub username: "
+  IFS= read -r gh_username
+  LIC_USERNAME=${gh_username}
   export LIC_USERNAME
-  read -r -s -p "Enter GitHub token [HIDDEN]: " gh_token
-  printf '\n'
-  LIC_PASSWORD="${gh_token}"
+
+  printf "Enter GitHub token [HIDDEN]: "
+  if [ -t 0 ]; then stty -echo 2>/dev/null; fi
+  IFS= read -r LIC_PASSWORD
+  if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
   export LIC_PASSWORD
 
-  unset LICENSE_TOKEN || true
+  unset LICENSE_TOKEN 2>/dev/null || true
 else
-  read -r -s -p "Enter License token [HIDDEN]: " lic_token
-  printf '\n'
-  LICENSE_TOKEN="${lic_token}"
+  printf "Enter License token [HIDDEN]: "
+  if [ -t 0 ]; then stty -echo 2>/dev/null; fi
+  IFS= read -r LICENSE_TOKEN
+  if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
   export LICENSE_TOKEN
 
-  unset LIC_USERNAME LIC_PASSWORD || true
+  unset LIC_USERNAME 2>/dev/null || true
+  unset LIC_PASSWORD 2>/dev/null || true
 fi
 
-read -r -s -p "Eneter Alita Admin password [default: admin] " al_admin_pass
-printf '\n'
-ADMIN_PASSWORD=${al_admin_pass:-admin}
+printf "Enter Alita Admin password [HIDDEN, default: admin]: "
+if [ -t 0 ]; then stty -echo 2>/dev/null; fi
+IFS= read -r _tmp
+if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
+ADMIN_PASSWORD=${_tmp:-admin}
+unset _tmp
 export ADMIN_PASSWORD
 
-read -r -s -p "Eneter REDIS password [default: redis_admin_pwd] " redis_pass
-printf '\n'
-REDIS_PASSWORD=${redis_pass:-redis_admin_pwd}
+printf "Enter REDIS password [HIDDEN, default: redis_admin_pwd]: "
+if [ -t 0 ]; then stty -echo 2>/dev/null; fi
+IFS= read -r _tmp
+if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
+REDIS_PASSWORD=${_tmp:-redis_admin_pwd}
+unset _tmp
 export REDIS_PASSWORD
 
-read -r -s -p "Eneter PGSQL password [default: pg_admin_pass] " pg_pass
-printf '\n'
-PG_PASSWORD=${pg_pass:-pg_admin_pass}
+printf "Enter PGSQL password [HIDDEN, default: pg_admin_pass]: "
+if [ -t 0 ]; then stty -echo 2>/dev/null; fi
+IFS= read -r _tmp
+if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
+PG_PASSWORD=${_tmp:-pg_admin_pass}
+unset _tmp
 export PG_PASSWORD
 
-read -r -s -p "Eneter APP_AUTH_SECRET [skip to autogenerate] " app_auth_secr
-printf '\n'
-APP_AUTH_SECRET=${app_auth_secr}
+printf "Enter APP_AUTH_SECRET [HIDDEN,skip to autogenerate]: "
+if [ -t 0 ]; then stty -echo 2>/dev/null; fi
+IFS= read -r APP_AUTH_SECRET
+if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
 export APP_AUTH_SECRET
-read -r -s -p "Eneter APP_MAIN_SECRET [skip to autogenerate] " app_main_secr
-printf '\n'
-APP_MAIN_SECRET=${app_main_secr}
+
+printf "Enter APP_MAIN_SECRET [HIDDEN, skip to autogenerate]: "
+if [ -t 0 ]; then stty -echo 2>/dev/null; fi
+IFS= read -r APP_MAIN_SECRET
+if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
 export APP_MAIN_SECRET
-read -r -s -p "Eneter MASTER_KEY [skip to autogenerate] " app_master
-printf '\n'
-MASTER_KEY=${app_master}
+
+printf "Enter MASTER_KEY [HIDDEN, skip to autogenerate]: "
+if [ -t 0 ]; then stty -echo 2>/dev/null; fi
+IFS= read -r MASTER_KEY
+if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
 export MASTER_KEY
+
+printf "Enter EVENT_HMAC_KEY [HIDDEN, skip to autogenerate]: "
+if [ -t 0 ]; then stty -echo 2>/dev/null; fi
+IFS= read -r EVENT_HMAC_KEY
+if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
+export EVENT_HMAC_KEY
+
+printf "Enter RPC_HMAC_KEY [HIDDEN, skip to autogenerate]: "
+if [ -t 0 ]; then stty -echo 2>/dev/null; fi
+IFS= read -r RPC_HMAC_KEY
+if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
+export RPC_HMAC_KEY
+
+printf "Enter EXPOSURE_HMAC_KEY [HIDDEN, skip to autogenerate]: "
+if [ -t 0 ]; then stty -echo 2>/dev/null; fi
+IFS= read -r EXPOSURE_HMAC_KEY
+if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
+export EXPOSURE_HMAC_KEY
+
+printf "Enter INDEXER_HMAC_KEY [HIDDEN, skip to autogenerate]: "
+if [ -t 0 ]; then stty -echo 2>/dev/null; fi
+IFS= read -r INDEXER_HMAC_KEY
+if [ -t 0 ]; then stty echo 2>/dev/null; printf "\n"; fi
+export INDEXER_HMAC_KEY
+
+unset in_allowed ALITA_ALLOWED
+printf "\nDone. Environment variables exported for Terraform.\n"
 

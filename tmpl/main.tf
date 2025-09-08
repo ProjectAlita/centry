@@ -73,6 +73,13 @@ variable "ALITA_RELEASE" {
   description = "Alita release"
 }
 
+variable "ALITA_REMOTE_REPO" {
+  type        = string
+  default     = "1"
+  description = "Alita remote repository"
+}
+
+
 variable "LIC_USERNAME" {
   type        = string
   default     = "github_username"
@@ -121,12 +128,51 @@ variable "MASTER_KEY" {
   description = "SECRETS_MASTER_KEY"
 }
 
+variable "EVENT_HMAC_KEY" {
+  type        = string
+  default     = ""
+  description = "SECRETS_EVENT_HMAC_KEY"
+}
+
+variable "RPC_HMAC_KEY" {
+  type        = string
+  default     = ""
+  description = "SECRETS_RPC_HMAC_KEY"
+}
+
+variable "EXPOSURE_HMAC_KEY" {
+  type        = string
+  default     = ""
+  description = "SECRETS_EXPOSURE_HMAC_KEY"
+}
+
+variable "INDEXER_HMAC_KEY" {
+  type        = string
+  default     = ""
+  description = "SECRETS_INDEXER_HMAC_KEY"
+}
+
 variable "PG_PASSWORD" {
   type        = string
   default     = "pg_admin"
   description = "PG Password"
 }
 
+resource "random_id" "event_hmac_key" {
+  byte_length = 32
+}
+
+resource "random_id" "rpc_hmac_key" {
+  byte_length = 32
+}
+
+resource "random_id" "exposure_hmac_key" {
+  byte_length = 32
+}
+
+resource "random_id" "indexer_hmac_key" {
+  byte_length = 32
+}
 
 resource "random_id" "fernet_key" {
   byte_length = 32
@@ -144,17 +190,22 @@ resource "local_file" "override" {
   content = templatefile(
     "${path.module}/override.env.tpl",
     {
-      APP_HOST        = var.APP_HOST
-      ALITA_RELEASE   = var.ALITA_RELEASE
-      LIC_USERNAME    = var.LIC_USERNAME
-      LIC_PASSWORD    = var.LIC_PASSWORD
-      LICENSE_TOKEN   = var.LICENSE_TOKEN
-      ADMIN_PASSWORD  = var.ADMIN_PASSWORD
-      APP_AUTH_SECRET = var.APP_AUTH_SECRET != "" ? var.APP_AUTH_SECRET : random_id.rnd_auth_secret.b64_std
-      APP_MAIN_SECRET = var.APP_MAIN_SECRET != "" ? var.APP_MAIN_SECRET : random_id.rnd_main_secret.b64_std
-      MASTER_KEY      = var.MASTER_KEY != "" ? var.MASTER_KEY : random_id.fernet_key.b64_std
-      REDIS_PASSWORD  = var.REDIS_PASSWORD
-      PG_PASSWORD     = var.PG_PASSWORD
+      APP_HOST          = var.APP_HOST
+      ALITA_RELEASE     = var.ALITA_RELEASE
+      LIC_USERNAME      = var.LIC_USERNAME
+      LIC_PASSWORD      = var.LIC_PASSWORD
+      LICENSE_TOKEN     = var.LICENSE_TOKEN
+      ADMIN_PASSWORD    = var.ADMIN_PASSWORD
+      APP_AUTH_SECRET   = var.APP_AUTH_SECRET != "" ? var.APP_AUTH_SECRET : random_id.rnd_auth_secret.b64_std
+      APP_MAIN_SECRET   = var.APP_MAIN_SECRET != "" ? var.APP_MAIN_SECRET : random_id.rnd_main_secret.b64_std
+      MASTER_KEY        = var.MASTER_KEY != "" ? var.MASTER_KEY : random_id.fernet_key.b64_std
+      EVENT_HMAC_KEY    = var.EVENT_HMAC_KEY != "" ? var.EVENT_HMAC_KEY : random_id.event_hmac_key.b64_url
+      RPC_HMAC_KEY      = var.RPC_HMAC_KEY != "" ? var.RPC_HMAC_KEY : random_id.rpc_hmac_key.b64_url
+      EXPOSURE_HMAC_KEY = var.EXPOSURE_HMAC_KEY != "" ? var.EXPOSURE_HMAC_KEY : random_id.exposure_hmac_key.b64_url
+      INDEXER_HMAC_KEY  = var.INDEXER_HMAC_KEY != "" ? var.INDEXER_HMAC_KEY : random_id.indexer_hmac_key.b64_url
+      REDIS_PASSWORD    = var.REDIS_PASSWORD
+      PG_PASSWORD       = var.PG_PASSWORD
+      ALITA_REMOTE_REPO = var.ALITA_REMOTE_REPO
 
     }
   )
@@ -192,7 +243,6 @@ resource "local_file" "pylon_main" {
   filename = "../pylon_main/pylon.yml"
 }
 
-
 resource "local_file" "pylon_predicts" {
   content = templatefile(
     "${path.module}/pylon_predicts.yml.tpl",
@@ -201,4 +251,44 @@ resource "local_file" "pylon_predicts" {
     }
   )
   filename = "../pylon_predicts/pylon.yml"
+}
+
+resource "local_file" "bootstrap_pylon_auth" {
+  content = templatefile(
+    "${path.module}/bootstrap_auth.yml.tpl",
+    {
+      ALITA_REMOTE_REPO = var.ALITA_REMOTE_REPO
+    }
+  )
+  filename = "../pylon_auth/configs/bootstrap.yml"
+}
+
+resource "local_file" "bootstrap_pylon_indexer" {
+  content = templatefile(
+    "${path.module}/bootstrap_indexer.yml.tpl",
+    {
+      ALITA_REMOTE_REPO = var.ALITA_REMOTE_REPO
+    }
+  )
+  filename = "../pylon_indexer/configs/bootstrap.yml"
+}
+
+resource "local_file" "bootstrap_pylon_main" {
+  content = templatefile(
+    "${path.module}/bootstrap_main.yml.tpl",
+    {
+      ALITA_REMOTE_REPO = var.ALITA_REMOTE_REPO
+    }
+  )
+  filename = "../pylon_main/configs/bootstrap.yml"
+}
+
+resource "local_file" "bootstrap_pylon_predicts" {
+  content = templatefile(
+    "${path.module}/bootstrap_predicts.yml.tpl",
+    {
+      ALITA_REMOTE_REPO = var.ALITA_REMOTE_REPO
+    }
+  )
+  filename = "../pylon_predicts/configs/bootstrap.yml"
 }

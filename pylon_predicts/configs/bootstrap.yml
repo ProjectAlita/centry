@@ -15,12 +15,9 @@ mesh:
 
 
 plugin_repo:
-- type: elitea_github
+- type: repo_depot
   release: ${ALITA_RELEASE}
-  license_username: ${LICENSE_USERNAME}
-  license_password: ${LICENSE_PASSWORD}
-  add_source_data: true
-  add_head_data: true
+  license_token: ${LICENSE_TOKEN}
 
 
 preordered_plugins:

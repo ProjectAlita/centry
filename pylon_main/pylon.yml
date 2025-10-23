@@ -24,6 +24,9 @@ server:
 #
 log:
   level: info
+  filters:
+    - type: "centry_logging.filters.truncate_base64.Base64SanitizationFilter"
+      max_base64_chars: 20
 
 #
 # SSL CAs

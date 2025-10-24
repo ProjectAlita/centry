@@ -58,3 +58,5 @@ preordered_plugins:
 - provider_hub
 #
 - mcp_sse
+#
+- context_manager

@@ -40,7 +40,7 @@ exposure:
     event_queue: ${NAME_PREFIX}_exposure_events
     hmac_key: ${EXPOSURE_HMAC_KEY}
     hmac_digest: sha512
-    callback_workers: 16
+    callback_workers: null
     use_ssl: ${REDIS_SSL}
   expose: true
   announce_interval: 3
@@ -114,7 +114,7 @@ events:
     queue: ${NAME_PREFIX}_events
     hmac_key: ${EVENT_HMAC_KEY}
     hmac_digest: sha512
-    callback_workers: 16
+    callback_workers: null
 
 #
 # RPC
@@ -128,7 +128,7 @@ rpc:
     queue: ${NAME_PREFIX}_rpc
     hmac_key: ${RPC_HMAC_KEY}
     hmac_digest: sha512
-    callback_workers: 32
+    callback_workers: null
   id_prefix: ${NAME_PREFIX}_auth_rpc_
 
 #

@@ -9,7 +9,7 @@ mesh:
     topic: mesh
     hmac_key: mesh
     hmac_digest: sha512
-    callback_workers: 16
+    callback_workers: null
     mute_first_failed_connections: 10
     log_errors: true
 

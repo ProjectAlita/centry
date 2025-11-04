@@ -18,6 +18,7 @@ settings:
     pool_pre_ping: true
     pool_size: 100
     max_overflow: 200
+    pool_recycle: 3600
   postgres_host: ${POSTGRES_HOST}
   postgres_port: ${POSTGRES_PORT}
   postgres_user: ${POSTGRES_USER}

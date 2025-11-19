@@ -3,6 +3,6 @@ change_password_url: "#"
 
 landing:
   kind: redirect
-  url: "${APP_PROTO}://${APP_HOST}/alita_ui"
+  url: "${APP_PROTO}://${APP_HOST}/app"
 
 default_mode_uri: /-/system/status/empty

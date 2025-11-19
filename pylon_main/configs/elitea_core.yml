@@ -18,3 +18,21 @@ nltk_data: /data/cache/nltk
 application_icon_path: /data/static/application_icon
 application_tool_icon_path: /data/static/alita_static-main/tool_icons
 default_entity_icons_path: /data/static/alita_static-main/default_entity_icons
+
+alita_ui_url: "${APP_PROTO}://${APP_HOST}/alita_ui"
+
+auto_setup: true
+ai_project_allowed_domains: "centry.user"
+add_admin_roles: ["system", "admin", "editor", "viewer", "prompt_lib_public", "prompt_lib_moderators", "public_admin"]
+
+default_release: ${ALITA_RELEASE}
+auth_token: ${LICENSE_PASSWORD}
+
+disable_monitoring_charts:
+- sentiment
+- relevancy
+- reliability
+- promptQuality
+- promptScatter
+- topicPrompt
+- topicChart

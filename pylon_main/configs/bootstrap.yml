@@ -39,14 +39,10 @@ preordered_plugins:
 #
 - worker_client
 #
-- promptlib_shared
-- applications
-- chat
+- elitea_core
 #
 - social
 - notifications
-#
-- alita_ui
 #
 - monitoring
 - monitoring_hub
@@ -54,9 +50,5 @@ preordered_plugins:
 - configurations
 #
 - runtime_interface_litellm
-#
-- provider_hub
-#
-- mcp_sse
 #
 - context_manager

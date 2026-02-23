@@ -11,8 +11,11 @@ event_node:
   use_ssl: ${REDIS_SSL}
   log_errors: true
 
+tasknode_tmp: /data/cache/tasknode
 task_queue_debug: true
+
 preloaded_models_enabled: false
 preloaded_models: []
+
 external_models_enabled: false
 indexer_tasks_enabled: true

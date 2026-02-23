@@ -31,3 +31,5 @@ preordered_plugins:
 - monitoring
 #
 - provider_worker
+#
+- runtime_engine_litellm

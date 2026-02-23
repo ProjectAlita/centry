@@ -52,7 +52,7 @@ default_secret_keys:
   - pgvector_project_password
   - project_llm_key
 
-default_release: ${ALITA_RELEASE}
+default_release: ${ALITA_UI_RELEASE}
 auth_token: ${LICENSE_PASSWORD}
 
 disable_monitoring_charts:

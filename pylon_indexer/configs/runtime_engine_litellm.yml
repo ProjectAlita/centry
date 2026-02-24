@@ -1,2 +1,2 @@
-database_url: null
-litellm_master_key: null
+database_url: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/litellm
+litellm_master_key: sk-${DEFAULT_ADMIN_PASSWORD}

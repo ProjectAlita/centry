@@ -32,10 +32,11 @@ plugin_repo:
 preordered_plugins:
 - worker_core
 #
+- sdk_plugin
 - indexer_worker
-#
-- monitoring
 #
 - provider_worker
 #
 - runtime_engine_litellm
+#
+- tracing

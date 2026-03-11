@@ -38,23 +38,20 @@ preordered_plugins:
 - artifacts
 - scheduling
 #
-- theme
-- design-system
+- admin_ui
+- elitea_core
 #
 - logging_hub
 #
 - worker_client
 #
-- elitea_core
-#
 - social
 - notifications
-#
-- monitoring
-- monitoring_hub
 #
 - configurations
 #
 - runtime_interface_litellm
 #
 - context_manager
+#
+- tracing

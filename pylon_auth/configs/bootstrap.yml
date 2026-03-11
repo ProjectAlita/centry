@@ -34,3 +34,5 @@ preordered_plugins:
 - auth_saml
 #
 - auth_idp_rpc
+#
+- tracing

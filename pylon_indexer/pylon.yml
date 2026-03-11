@@ -73,3 +73,4 @@ environment:
   NLTK_DATA: /data/cache/nltk
   TRANSFORMERS_CACHE: /data/cache/transformers
   TIKTOKEN_CACHE_DIR: /data/cache/tiktoken
+  AZURE_DEVOPS_CACHE_DIR: /data/cache/ado

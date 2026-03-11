@@ -165,5 +165,9 @@ envs/override.env
 # Pylon-specific
 pylon_*/cache/
 pylon_*/plugins/
-pylon_*/storage/
 pylon_*/requirements/
+pylon_*/pylon.db
+pylon_*/storage/
+pylon_*/static/
+pylon_*/libcloud/
+pylon_*/litellm/

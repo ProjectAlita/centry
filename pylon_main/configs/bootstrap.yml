@@ -52,6 +52,4 @@ preordered_plugins:
 #
 - runtime_interface_litellm
 #
-- context_manager
-#
 - tracing
